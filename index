@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uyarı Sayfası</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #023158;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Kazı Animasyonunun Yerine Şık ve Eğlenceli Banner */
+        .notification {
+            width: 100%;
+            height: 120px;
+            background: #f1c40f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #023158;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 4px solid #023158;
+            animation: moveBanner 4s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Banner'ın Hareket Etme Animasyonu */
+        @keyframes moveBanner {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* İçerik Bölümü */
+        .content {
+            text-align: center;
+            padding: 30px;
+            border: 3px solid #f1c40f;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 600px;
+            margin-top: 140px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #f1c40f;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+        }
+
+        .footer {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #f1c40f;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="notification">
+        🚧 Sistem Geliştirme Aşamasında! 🚧
+    </div>
+
+    <div class="content">
+        <h1>Vision Gate Otomatik Kapı ve Diğer Sistemler Geliştirme Aşamasındadır</h1>
+        <p>İletişim: yusfyl3</p>
+        <div class="footer">
+            <p>Çalışma Bölgesi</p>
+            <p><em>Biraz sabır, her şey harika olacak!</em></p>
+        </div>
+    </div>
+
+</body>
+</html>
