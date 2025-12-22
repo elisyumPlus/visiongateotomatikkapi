@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vision Gate Otomatik Kapı Sistemleri</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: #fff;
+  }
+
+  /* Üst Menü ve Sticky Navbar */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000;
+    transition: background-color 0.3s;
+  }
+
+  header h1 {
+    color: orange;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  nav a:hover {
+    color: orange;
+  }
+
+  .contact-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Ana İçerik */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 20px;
+    background-color: #1a1a1a;
+    flex-wrap: wrap;
+  }
+
+  .hero-text {
+    max-width: 50%;
+  }
+
+  .hero h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    padding: 15px 30px;
+    background-color: orange;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn:hover {
+    background-color: #ff7f00;
+  }
+
+  /* Ürünler Bölümü */
+  .products {
+    padding: 40px 20px;
+  }
+
+  .products h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: orange;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+
+  .product-card {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+
+  .product-card img {
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  /* Alt Kısım */
+  .bottom-section {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+    background-color: #1a1a1a;
+    gap: 20px;
+  }
+
+  .bottom-box {
+    flex: 1;
+    min-width: 250px;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .bottom-box h4 {
+    color: orange;
+    margin-bottom: 15px;
+  }
+
+  .bottom-box button {
+    padding: 10px 20px;
+    background-color: orange;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* İletişim */
+  footer {
+    padding: 20px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+
+  /* Responsive */
+  @media(max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-text {
+      max-width: 100%;
+      text-align: center;
+    }
+    nav {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 style="color: orange;">Vision Gate Otomatik Kapı Sistemleri</h1>
+  <nav>
+    <a href="#">ANA SAYFA</a>
+    <a href="#">ÜRÜNLER</a>
+    <a href="#iletisim">İLETİŞİM</a>
+    <a href="#form">TEKLİF FORMU</a>
+  </nav>
+  <div class="contact-info">
+    <span><img src="https://img.icons8.com/ios-filled/20/ffffff/phone.png"/> +90 (539) 350 03 56</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h2>Otomatik Kapı Sistemleri ve Güvenlik Çözümleri</h2>
+    <p>Güvenli ve Profesyonel Otomasyon Hizmetleri</p>
+    <button class="btn" onclick="document.getElementById('form').scrollIntoView({behavior: 'smooth'});">TEKLİF AL</button>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1601077850960-599d4f0b3b4d" alt="Kapı Sistemleri" style="width:100%; max-width:400px; border-radius:8px;">
+  </div>
+</section>
+
+<section class="products">
+  <h3>ÜRÜNLERİMİZ</h3>
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1601077850960-599d4f0b3b4d" alt="Otomatik Kapı"/>
+      <p>Otomatik Kapı</p>
+    </div>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1601077850960-599d4f0b3b4d" alt="Yana Kayar Kapı"/>
+      <p>Yana Kayar Kapı</p>
+    </div>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1601077850960-599d4f0b3b4d" alt="Barier"/>
+      <p>Barier</p>
+    </div>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1601077850960-599d4f0b3b4d" alt="Endüstriyel Kapı"/>
+      <p>Endüstriyel Kapı</p>
+    </div>
+    <!-- Diğer ürünler eklenebilir -->
+  </div>
+</section>
+
+<!-- İletişim ve Harita -->
+<section id="iletisim" style="padding:40px 20px; background-color:#222;">
+  <h3 style="color:orange; text-align:center;">İLETİŞİM BİLGİLERİMİZ</h3>
+  <p style="text-align:center;">Adres: Güneş Mahallesi, Okan Merzeci Bulvarı, Dış Kapı No:77B, Akdeniz, Mersin</p>
+  <p style="text-align:center;">Telefon: +90 (539) 350 03 56</p>
+  <p style="text-align:center;">Mail: visiongateotomatikkapisistemle@gmail.com</p>
+  <div style="width:100%; height:300px; margin-top:20px;">
+    <!-- Google Maps Embed -->
+    <iframe src="https://www.google.com/maps?q=Güneş Mahallesi, Okan Merzeci Bulvarı, Dış Kapı No:77B, Akdeniz, Mersin&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- Teklif Formu -->
+<section id="form" style="padding:40px 20px; background-color:#1a1a1a;">
+  <h3 style="color:orange; text-align:center;">Bize Ulaşın / Teklif Formu</h3>
+  <form style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:10px; color:#fff;">
+    <input type="text" placeholder="Adınız" style="padding:10px; border-radius:5px; border:none;"/>
+    <input type="email" placeholder="Email" style="padding:10px; border-radius:5px; border:none;"/>
+    <textarea placeholder="Mesajınız" rows="4" style="padding:10px; border-radius:5px; border:none;"></textarea>
+    <button type="submit" class="btn">Gönder</button>
+  </form>
+</section>
+
+<!-- Alt Kısım -->
+<section class="bottom-section">
+  <div class="bottom-box">
+    <h4>TEKLİF ALIN</h4>
+    <p>Size özel fiyat teklifleri için bizimle iletişime geçin.</p>
+    <button>TEKLİF AL</button>
+  </div>
+  <div class="bottom-box">
+    <h4>WHATSAPP İLETİŞİM</h4>
+    <p>Hızlı iletişim için WhatsApp üzerinden bize ulaşın.</p>
+    <button>MESAJ GÖNDER</button>
+  </div>
+  <div class="bottom-box">
+    <h4>ARIZA DESTEK</h4>
+    <p>7/24 Arıza ve Servis hizmetimizle yanınızdayız.</p>
+    <button>DESTEK HATTI</button>
+  </div>
+</section>
+
+<!-- Sosyal Medya ve Footer -->
+<footer>
+  <div>İletişim</div>
+  <div>Adres: Güneş Mahallesi, Okan Merzeci Bulvarı, Dış Kapı No:77B, Akdeniz, Mersin</div>
+  <div>Telefon: +90 (539) 350 03 56</div>
+  <div>Mail: visiongateotomatikkapisistemle@gmail.com</div>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png"/></a>
+    <a href="https://www.instagram.com/visiongate_/?igsh=MWp2Ymk1c2xxMHRjaQ=="><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png"/></a>
+    <a href="mailto:visiongateotomatikkapisistemle@gmail.com"><img src="https://img.icons8.com/ios-filled/24/ffffff/email.png"/></a>
+  </div>
+</footer>
+
+</body>
+</html>
