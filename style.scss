@@ -1,0 +1,15 @@
+/* SCSS kaynak (örnek, basit değişkenler) */
+$bg: #141414;
+$accent: #ff7a1a;
+$muted: #bdbdbd;
+
+body{
+  background: linear-gradient(180deg,#0f0f0f,#1a1a1a);
+  color: #eee;
+  font-family: "Montserrat", sans-serif;
+}
+
+.header { /* ... */ }
+
+/* Bu dosya örnek kaynak/structure için verildi. 
+   style.css yukarıda derlenmiş halidir. */
