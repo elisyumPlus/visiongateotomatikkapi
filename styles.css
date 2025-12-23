@@ -1,97 +1,117 @@
+/* Genel stil */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #111;
     color: #fff;
 }
 
+/* Header ve Navbar Stili */
 header {
-    background-color: #222;
+    background: linear-gradient(45deg, #333, #222);
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    align-items: center;
+    padding: 20px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
 }
 
 header .logo {
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: bold;
     color: orange;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 header nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 30px;
+}
+
+header nav ul li {
+    position: relative;
 }
 
 header nav ul li a {
     color: #fff;
     text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
-.hero {
-    background-color: #333;
-    text-align: center;
-    padding: 50px;
-}
-
-.hero h1 {
-    font-size: 40px;
+header nav ul li a:hover {
     color: orange;
 }
 
-.hero p {
-    font-size: 18px;
-    color: #fff;
-}
-
-.hero .cta {
-    background-color: orange;
-    padding: 10px 20px;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-}
-
-.products {
-    background-color: #222;
-    padding: 40px;
-}
-
-.product-gallery {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.product-gallery .product-item img {
-    width: 100%;
-    height: auto;
-}
-
-.contact-options {
+/* Telefon numarası */
+.contact {
     display: flex;
-    justify-content: space-around;
-    padding: 20px;
+    align-items: center;
 }
 
-.contact-options button {
-    padding: 15px;
+.phone {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #444;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.phone:hover {
     background-color: orange;
     color: #fff;
-    border: none;
 }
 
-footer {
-    background-color: #111;
-    padding: 20px;
-    text-align: center;
+/* Navbar'ı sayfanın en üstünde tutma */
+body {
+    padding-top: 70px; /* Navbar'ın altına gelecek içerik */
 }
 
-footer .contact-info p,
-footer .social-media a {
-    color: #fff;
-    font-size: 14px;
+/* Yavaşça gelen animasyon */
+header a {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
 }
 
-footer .social-media a {
-    margin: 0 10px;
+header a:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+header a:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+header a:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+header a:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+/* Animasyon */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
