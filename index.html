@@ -1,51 +1,302 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kepenk Sistemleri</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Active Kepenk | Otomatik Kepenk Sistemleri</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global stil */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      background-color: #1f1f1f;
+      color: #f0f0f0;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #2c2c2c;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    header h1 {
+      color: #ff7f00;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 1.5px;
+    }
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #ff7f00;
+    }
+
+    /* Hero alanı */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1560184897-4e197551cda9?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.5);
+    }
+    .hero h2 {
+      font-size: 38px;
+      max-width: 900px;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .hero p {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #ddd;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-weight: 500;
+      max-width: 700px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 32px;
+      background-color: #ff7f00;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0 3px 7px rgba(255,127,0,0.6);
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #e16f00;
+      box-shadow: 0 5px 15px rgba(225,111,0,0.8);
+    }
+
+    /* Hizmetler Bölümü */
+    .section {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .section h3 {
+      font-size: 30px;
+      margin-bottom: 35px;
+      border-left: 6px solid #ff7f00;
+      padding-left: 15px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 28px;
+    }
+    .card {
+      background-color: #2f2f2f;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(255,127,0,0.7);
+    }
+    .material-icons {
+      font-size: 52px;
+      color: #ff7f00;
+      margin-bottom: 18px;
+    }
+    .card h4 {
+      color: #ff7f00;
+      font-weight: 700;
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+    .card p {
+      font-size: 16px;
+      color: #ddd;
+      line-height: 1.4;
+    }
+
+    /* İletişim Bölümü */
+    .contact form {
+      max-width: 480px;
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact input, .contact textarea {
+      background-color: #3a3a3a;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #eee;
+      font-size: 16px;
+      resize: vertical;
+      transition: background-color 0.3s ease;
+    }
+    .contact input:focus, .contact textarea:focus {
+      background-color: #505050;
+      outline: none;
+    }
+    .contact button {
+      background-color: #ff7f00;
+      border: none;
+      padding: 14px 0;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255,127,0,0.6);
+      transition: background-color 0.3s ease;
+    }
+    .contact button:hover {
+      background-color: #e16f00;
+      box-shadow: 0 6px 14px rgba(225,111,0,0.8);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 30px 20px;
+      text-align: center;
+      background-color: #111;
+      color: #888;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    /* Mobil uyumluluk */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        margin-top: 10px;
+      }
+      nav a {
+        margin-left: 0;
+        margin-right: 15px;
+        display: inline-block;
+      }
+      .hero h2 {
+        font-size: 28px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+      .btn {
+        font-size: 16px;
+        padding: 10px 22px;
+      }
+      .section h3 {
+        font-size: 24px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+      .contact form {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo">KEPENK SİSTEMLERİ</div>
-        <nav>
-            <ul>
-                <li><a href="#">Ana Sayfa</a></li>
-                <li><a href="#">Ürünler</a></li>
-                <li><a href="#">Hakkımızda</a></li>
-                <li><a href="#">İletişim</a></li>
-            </ul>
-        </nav>
-        <div class="contact">
-            <span class="phone">0555 123 45 67</span>
-        </div>
-    </header>
+  <header>
+    <h1>Active Kepenk</h1>
+    <nav>
+      <a href="#hizmetler">Hizmetler</a>
+      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+  </header>
 
-    <!-- Main Content Section -->
-    <section class="hero">
-        <h1>Kepenk & Otomatik Kapı Sistemleri</h1>
-        <p>Güvenli ve Profesyonel Çözümler</p>
-        <button class="cta">Teklif Al</button>
-    </section>
+  <section class="hero">
+    <h2>Otomatik Kepenk ve Panjur Sistemlerinde Uzman Çözüm Ortağınız</h2>
+    <p>20+ Yıllık Deneyim – İstanbul Geneli Hizmet</p>
+    <a href="#iletisim" class="btn">Ücretsiz Keşif Al</a>
+  </section>
 
-    <section class="products">
-        <h2>Ürünlerimiz</h2>
-        <div class="product-gallery">
-            <div class="product-item"><img src="product1.jpg" alt="Kepenk"></div>
-            <div class="product-item"><img src="product2.jpg" alt="Yana Kayar Bahçe Kapısı"></div>
-            <div class="product-item"><img src="product3.jpg" alt="Barivier"></div>
-            <div class="product-item"><img src="product4.jpg" alt="Endüstriyel Kapı"></div>
-        </div>
-    </section>
+  <section class="section" id="hizmetler">
+    <h3>Hizmetlerimiz</h3>
+    <div class="cards">
+      <div class="card">
+        <span class="material-icons">roller_shades</span>
+        <h4>Otomatik Kepenk</h4>
+        <p>Endüstriyel ve ev tipi otomatik kepenk sistemleri kurulumu ve bakımı.</p>
+      </div>
+      <div class="card">
+        <span class="material-icons">window</span>
+        <h4>Panjur Sistemleri</h4>
+        <p>Modern ve güvenli panjur sistemleri ile estetik ve güvenliği bir araya getiriyoruz.</p>
+      </div>
+      <div class="card">
+        <span class="material-icons">door_front</span>
+        <h4>Fotoselli Kapılar</h4>
+        <p>Market ve mağazalara özel fotoselli kapı montajı ve teknik servis.</p>
+      </div>
+      <div class="card">
+        <span class="material-icons">build</span>
+        <h4>Servis ve Onarım</h4>
+        <p>Arıza tespiti, motor değişimi ve bakım hizmetleriyle 7/24 yanınızdayız.</p>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <div class="contact-info">
-            <p>Adres: Örnek Mah. İş Merkezi, İstanbul</p>
-            <p>Telefon: 0555 123 45 67</p>
-            <p>Email: info@sitedresiniz.com</p>
-        </div>
-    </footer>
+  <section class="section" id="hakkimizda">
+    <h3>Hakkımızda</h3>
+    <p>
+      Active Kepenk olarak, 20 yılı aşkın tecrübemizle İstanbul genelinde otomatik kepenk, panjur ve fotoselli kapı sistemleri alanında hizmet vermekteyiz. Hızlı servis, kaliteli işçilik ve müşteri memnuniyeti ilkesiyle çalışıyoruz.
+    </p>
+  </section>
+
+  <section class="section contact" id="iletisim">
+    <h3>İletişim</h3>
+    <form>
+      <input type="text" placeholder="Ad Soyad" required />
+      <input type="tel" placeholder="Telefon Numaranız" required />
+      <textarea rows="4" placeholder="Mesajınız..."></textarea>
+      <button type="submit">Gönder</button>
+    </form>
+    <p>Telefon: <a href="tel:+905455764988">0 (545) 576 49 88</a></p>
+    <p>Adres: İstanbul, Türkiye</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Active Kepenk. Tüm hakları saklıdır.
+  </footer>
 </body>
 </html>
