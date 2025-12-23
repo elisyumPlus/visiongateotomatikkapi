@@ -1,4 +1,4 @@
-/* Genel stil */
+/* Temel stil */
 * {
     margin: 0;
     padding: 0;
@@ -6,19 +6,25 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #111;
     color: #fff;
+    line-height: 1.6;
 }
 
-/* Header ve Navbar Stili */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header Tasarımı */
 header {
     background: linear-gradient(45deg, #333, #222);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     z-index: 100;
@@ -30,8 +36,8 @@ header .logo {
     font-size: 28px;
     font-weight: bold;
     color: orange;
-    letter-spacing: 1px;
     text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
 }
 
@@ -47,7 +53,6 @@ header nav ul li {
 
 header nav ul li a {
     color: #fff;
-    text-decoration: none;
     font-size: 16px;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -79,39 +84,80 @@ header nav ul li a:hover {
     color: #fff;
 }
 
-/* Navbar'ı sayfanın en üstünde tutma */
-body {
-    padding-top: 70px; /* Navbar'ın altına gelecek içerik */
+/* Ana Sayfa İçeriği */
+.hero {
+    background-color: #333;
+    text-align: center;
+    padding: 100px 20px;
 }
 
-/* Yavaşça gelen animasyon */
-header a {
-    opacity: 0;
-    animation: fadeIn 1s ease-out forwards;
+.hero h1 {
+    font-size: 50px;
+    color: orange;
+    margin-bottom: 20px;
 }
 
-header a:nth-child(1) {
-    animation-delay: 0.2s;
+.hero p {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 30px;
 }
 
-header a:nth-child(2) {
-    animation-delay: 0.4s;
+.hero .cta {
+    background-color: orange;
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-header a:nth-child(3) {
-    animation-delay: 0.6s;
+.hero .cta:hover {
+    background-color: #e68a00;
 }
 
-header a:nth-child(4) {
-    animation-delay: 0.8s;
+/* Ürünler Bölümü */
+.products {
+    background-color: #222;
+    padding: 40px 20px;
+    text-align: center;
 }
 
-/* Animasyon */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.products h2 {
+    font-size: 28px;
+    color: orange;
+    margin-bottom: 30px;
+}
+
+.product-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.product-gallery .product-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.product-gallery .product-item img:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #111;
+    padding: 20px 30px;
+    text-align: center;
+    color: #fff;
+}
+
+footer .contact-info p {
+    font-size: 16px;
+    margin-bottom: 10px;
 }
