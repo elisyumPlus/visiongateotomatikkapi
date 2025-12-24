@@ -29,12 +29,12 @@
             scroll-behavior: smooth;
         }
 
-        /* DUYURU BOXU */
+        /* DUYURU ÇUBUĞU */
         #announcement-bar {
             display: none;
             background: linear-gradient(90deg, #ff8c00, #ffb347);
             color: #000;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             font-weight: 800;
             position: fixed;
@@ -42,7 +42,7 @@
             width: 100%;
             z-index: 999;
             box-shadow: 0 4px 15px rgba(255,140,0,0.4);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
         }
 
@@ -83,9 +83,6 @@
             box-shadow: 0 15px 35px rgba(255, 140, 0, 0.15);
         }
 
-        .modal-content { background-color: #1a1a1a; border: 1px solid var(--accent); color: white; }
-        .btn-close { filter: invert(1); }
-
         .form-input {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
@@ -98,26 +95,19 @@
         .form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); color: white; }
 
         .btn-premium {
-            background: var(--accent);
-            color: black;
-            font-weight: 700;
-            padding: 15px;
-            border-radius: 12px;
-            border: none;
-            width: 100%;
-            text-transform: uppercase;
-            transition: 0.3s;
+            background: var(--accent); color: black; font-weight: 700; padding: 15px; border-radius: 12px;
+            border: none; width: 100%; text-transform: uppercase; transition: 0.3s;
         }
         .btn-premium:hover { background: #ffa500; transform: scale(1.02); }
 
         .product-img {
-            height: 200px;
-            width: 100%;
-            object-fit: cover;
-            filter: grayscale(30%);
-            transition: 0.5s;
+            height: 200px; width: 100%; object-fit: cover; filter: grayscale(30%); transition: 0.5s;
         }
         .glass-card:hover .product-img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* Modal Styles */
+        .modal-content { background-color: #1a1a1a; border: 1px solid var(--accent); color: white; }
+        .btn-close { filter: invert(1); }
 
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF;
@@ -168,27 +158,22 @@
                 <div class="glass-card p-4" style="background: rgba(18,18,18,0.95);">
                     <h3 class="mb-4">Hızlı Teklif Formu</h3>
                     <form id="teklifForm">
-                        <input type="text" id="ad" class="form-input" placeholder="Adınız Soyadınız" required>
-                        <input type="tel" id="tel" class="form-input" placeholder="Telefonunuz" required>
-                        <select id="hizmet" class="form-input">
+                        <input type="text" id="tAd" class="form-input" placeholder="Adınız Soyadınız" required>
+                        <input type="tel" id="tTel" class="form-input" placeholder="Telefonunuz" required>
+                        <select id="tHizmet" class="form-input">
                             <option selected disabled>Hizmet Seçiniz</option>
                             <option>Otomatik Çelik Kepenk</option>
                             <option>Alüminyum Kepenk</option>
                             <option>Seksiyonel Kapı</option>
                             <option>Fotoselli Kapı</option>
                             <option>Hızlı PVC Kapı</option>
-                            <option>Bahçe Kapı Motoru</option>
                             <option>Garaj Kapısı</option>
-                            <option>Yangın Kapısı</option>
                             <option>Ev Dekorasyonu & Tadilat</option>
-                            <option>Anahtar Teslim Dekorasyon</option>
-                            <option>Su & Elektrik Tesisatı</option>
-                            <option>Doğalgaz Tesisatı</option>
                         </select>
-                        <textarea id="not" class="form-input" rows="2" placeholder="Talebiniz..."></textarea>
+                        <textarea id="tNot" class="form-input" rows="2" placeholder="Talebiniz..."></textarea>
                         <button type="submit" class="btn btn-premium">Hemen Gönder</button>
                     </form>
-                    <div id="teklifSuccess" class="alert alert-success mt-2 d-none">Talebiniz başarıyla iletildi!</div>
+                    <div id="tSuccess" class="alert alert-success mt-2 d-none">İşlem Başarılı!</div>
                 </div>
             </div>
         </div>
@@ -220,7 +205,6 @@
                 ];
 
                 for(let i=0; i<12; i++) {
-                    let detay = i < 8 ? "Yüksek dayanıklılık, sessiz çalışma ve 2 yıl tam garanti." : "Anahtar teslim profesyonel uygulama ve mimari çözümler.";
                     document.write(`
                     <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="${i*50}">
                         <div class="glass-card">
@@ -231,24 +215,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="modal${i}" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade" id="modal${i}" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-warning">${urunler[i]}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
+                                <div class="modal-header border-0"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                                 <div class="modal-body text-center">
-                                    <img src="${resimler[i]}" class="img-fluid rounded mb-3 w-100">
-                                    <p class="text-light">${detay}</p>
-                                </div>
-                                <div class="modal-footer justify-content-center border-0">
-                                    <a href="#teklif" class="btn btn-premium btn-sm" onclick="bootstrap.Modal.getInstance(document.getElementById('modal${i}')).hide()">BİLGİ AL</a>
+                                    <h4 class="text-warning mb-3">${urunler[i]}</h4>
+                                    <img src="${resimler[i]}" class="img-fluid rounded mb-3">
+                                    <p>Yüksek kalite ve YusufORHAN güvencesiyle profesyonel uygulama.</p>
+                                    <a href="#teklif" class="btn btn-premium btn-sm" data-bs-dismiss="modal">TEKLİF AL</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    `);
+                    </div>`);
                 }
             </script>
         </div>
@@ -259,17 +238,15 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8" data-aos="fade-up">
-                <div class="glass-card p-4 p-md-5 border-warning">
-                    <h3 class="text-center mb-4"><i class="fas fa-tools text-warning me-2"></i>7/24 Teknik Servis Kaydı</h3>
+                <div class="glass-card p-4 p-md-5 border-warning text-center">
+                    <h3 class="mb-4 text-warning"><i class="fas fa-tools me-2"></i>7/24 Teknik Servis Kaydı</h3>
                     <form id="arizaForm" class="row g-3">
-                        <div class="col-md-6"><input type="text" id="arizaAd" class="form-input" placeholder="Ad Soyad / Firma" required></div>
-                        <div class="col-md-6"><input type="tel" id="arizaTel" class="form-input" placeholder="İletişim Tel" required></div>
-                        <div class="col-12"><textarea id="arizaNot" class="form-input" rows="3" placeholder="Arıza durumunu yazınız..."></textarea></div>
-                        <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-warning fw-bold w-100 py-3">BİZE İLETİN</button>
-                        </div>
+                        <div class="col-md-6"><input type="text" id="aAd" class="form-input" placeholder="Ad Soyad" required></div>
+                        <div class="col-md-6"><input type="tel" id="aTel" class="form-input" placeholder="Telefon" required></div>
+                        <div class="col-12"><textarea id="aNot" class="form-input" rows="3" placeholder="Arıza detayını yazınız..."></textarea></div>
+                        <div class="col-12"><button type="submit" class="btn btn-warning fw-bold w-100 py-3">KAYIT AÇ</button></div>
                     </form>
-                    <div id="arizaSuccess" class="alert alert-success mt-2 d-none">Arıza kaydınız oluşturuldu. Ekibimiz arayacak.</div>
+                    <div id="aSuccess" class="alert alert-success mt-2 d-none">Kaydınız oluşturuldu.</div>
                 </div>
             </div>
         </div>
@@ -277,28 +254,10 @@
 </section>
 
 <footer>
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-4 text-center text-lg-start">
-                <div class="brand fs-3 mb-3">VİSİON<span>GATE</span></div>
-                <p class="text-secondary small">Mersin'in lider yapı ve otomasyon firması olarak YusufORHAN liderliğinde hizmetinizdeyiz.</p>
-                <div class="mt-3">
-                    <a href="https://www.instagram.com/visiongate_?igsh=MWp2Ymk1c2xxMHRjaQ%3D%3D" target="_blank" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
-                    <a href="mailto:visiongateotomatikkapisistemle@gmail.com" class="text-white fs-4"><i class="far fa-envelope"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center">
-                <h5 class="mb-3 text-warning">İletişim Bilgileri</h5>
-                <div class="contact-info small text-secondary">
-                    <p><i class="fas fa-map-marker-alt"></i> Güneş Mah. Okan Merzeci Bulv. Dış Kapı No:77B Akdeniz/Mersin</p>
-                    <p><i class="fas fa-phone-alt"></i> +90 (539) 350 03 56</p>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <p class="text-secondary small mb-1">Vision Gate © 2025</p>
-                <p class="text-warning fw-bold mb-1">YusufORHAN</p>
-            </div>
-        </div>
+    <div class="container text-center">
+        <div class="brand fs-3 mb-3">VİSİON<span>GATE</span></div>
+        <p class="small text-secondary">Güneş Mah. Okan Merzeci Bulv. No:77B Akdeniz/Mersin | +90 539 350 03 56</p>
+        <p class="text-warning fw-bold">YusufORHAN © 2025</p>
     </div>
 </footer>
 
@@ -307,57 +266,46 @@
 </a>
 
 <script>
-    // FIREBASE YAPILANDIRMASI (Firebase Console'dan alacağın bilgiler buraya gelecek)
     const firebaseConfig = {
-        apiKey: "BURAYA_API_KEY_GELECEK",
-        authDomain: "PROJE_ID.firebaseapp.com",
-        projectId: "PROJE_ID",
-        storageBucket: "PROJE_ID.appspot.com",
-        messagingSenderId: "SENDER_ID",
-        appId: "APP_ID"
+        apiKey: "AIzaSyDXTBYHb9kxgb37-H-NM2dn1ESvVy0xg88",
+        authDomain: "visiongateotokapi.firebaseapp.com",
+        projectId: "visiongateotokapi",
+        storageBucket: "visiongateotokapi.firebasestorage.app",
+        messagingSenderId: "913114045124",
+        appId: "1:913114045124:web:2ff87d9e0a9c3d062b8791"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // DUYURU ÇEKME
-    db.collection("ayarlar").doc("duyuru").onSnapshot((doc) => {
+    // Duyuru
+    db.collection("ayarlar").doc("duyuru").onSnapshot(doc => {
         const bar = document.getElementById("announcement-bar");
         if (doc.exists && doc.data().aktif) {
-            bar.innerText = doc.data().mesaj;
-            bar.style.display = "block";
-        } else {
-            bar.style.display = "none";
-        }
+            bar.innerText = doc.data().mesaj; bar.style.display = "block";
+        } else { bar.style.display = "none"; }
     });
 
-    // TEKLİF GÖNDERME
-    document.getElementById("teklifForm").addEventListener("submit", (e) => {
+    // Formlar
+    document.getElementById("teklifForm").onsubmit = async (e) => {
         e.preventDefault();
-        db.collection("teklifler").add({
-            ad: document.getElementById("ad").value,
-            tel: document.getElementById("tel").value,
-            hizmet: document.getElementById("hizmet").value,
-            not: document.getElementById("not").value,
+        await db.collection("teklifler").add({
+            ad: document.getElementById("tAd").value, tel: document.getElementById("tTel").value,
+            hizmet: document.getElementById("tHizmet").value, not: document.getElementById("tNot").value,
             tarih: new Date().toLocaleString("tr-TR")
-        }).then(() => {
-            document.getElementById("teklifSuccess").classList.remove("d-none");
-            document.getElementById("teklifForm").reset();
         });
-    });
+        document.getElementById("tSuccess").classList.remove("d-none");
+        document.getElementById("teklifForm").reset();
+    };
 
-    // ARIZA GÖNDERME
-    document.getElementById("arizaForm").addEventListener("submit", (e) => {
+    document.getElementById("arizaForm").onsubmit = async (e) => {
         e.preventDefault();
-        db.collection("arizalar").add({
-            ad: document.getElementById("arizaAd").value,
-            tel: document.getElementById("arizaTel").value,
-            not: document.getElementById("arizaNot").value,
-            tarih: new Date().toLocaleString("tr-TR")
-        }).then(() => {
-            document.getElementById("arizaSuccess").classList.remove("d-none");
-            document.getElementById("arizaForm").reset();
+        await db.collection("arizalar").add({
+            ad: document.getElementById("aAd").value, tel: document.getElementById("aTel").value,
+            not: document.getElementById("aNot").value, tarih: new Date().toLocaleString("tr-TR")
         });
-    });
+        document.getElementById("aSuccess").classList.remove("d-none");
+        document.getElementById("arizaForm").reset();
+    };
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
