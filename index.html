@@ -1,151 +1,367 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kepenk Sistemleri — Ana Sayfa (Demo)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/main.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VİSİON GATE | Kepenk & Yapı Dekorasyon Mersin</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <style>
+        :root {
+            --accent: #ff8c00; 
+            --accent-glow: rgba(255, 140, 0, 0.4);
+            --dark-deep: #000000;
+            --dark-card: #111111;
+        }
+
+        body {
+            background-color: var(--dark-deep);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* DUYURU BOXU */
+        #announcement-bar {
+            display: none;
+            background: linear-gradient(90deg, #ff8c00, #ffb347);
+            color: #000;
+            padding: 10px;
+            text-align: center;
+            font-weight: 800;
+            position: fixed;
+            top: 75px; 
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(255,140,0,0.4);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3, h5, .brand { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95) !important;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+            padding: 15px 0;
+            z-index: 1000;
+        }
+        .navbar-brand span { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(45deg, rgba(0,0,0,0.9) 30%, transparent), 
+                        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070') center/cover;
+            padding-top: 80px;
+        }
+
+        .hero-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.1; }
+        .hero-title span { color: var(--accent); }
+
+        .glass-card {
+            background: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s;
+            height: 100%;
+        }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 35px rgba(255, 140, 0, 0.15);
+        }
+
+        .modal-content { background-color: #1a1a1a; border: 1px solid var(--accent); color: white; }
+        .btn-close { filter: invert(1); }
+
+        .form-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #ccc;
+            padding: 12px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); color: white; }
+
+        .btn-premium {
+            background: var(--accent);
+            color: black;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            width: 100%;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-premium:hover { background: #ffa500; transform: scale(1.02); }
+
+        .product-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: 0.5s;
+        }
+        .glass-card:hover .product-img { filter: grayscale(0%); transform: scale(1.05); }
+
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF;
+            border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            z-index: 10000; display: flex; align-items: center; padding: 10px 20px; text-decoration: none; transition: 0.3s;
+        }
+        .wa-text { font-size: 16px; font-weight: 600; margin-left: 10px; }
+
+        footer { border-top: 1px solid #222; padding: 50px 0; background: #000; }
+        .contact-info i { color: var(--accent); margin-right: 10px; }
+    </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand">
-        <span class="logo-orange">KEPENK</span>
-        <span class="logo-gray">SİSTEMLERİ</span>
-      </div>
-      <nav class="main-nav">
-        <a class="nav-item active" href="#">ANA SAYFA</a>
-        <a class="nav-item" href="#">ÜRÜNLER</a>
-        <a class="nav-item" href="#">HAKKIMIZDA</a>
-        <a class="nav-item" href="#">İLETİŞİM</a>
-      </nav>
-      <div class="header-right">
-        <a href="tel:05551234567" class="phone">0555 123 45 67</a>
-        <button class="hamburger" aria-label="menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-    <div class="mobile-menu" aria-hidden="true">
-      <a href="#">ANA SAYFA</a>
-      <a href="#">ÜRÜNLER</a>
-      <a href="#">HAKKIMIZDA</a>
-      <a href="#">İLETİŞİM</a>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-inner">
-        <div class="hero-left">
-          <h1><span class="muted">KEPENK & OTOMATİK</span><br><span class="accent">KAPI SİSTEMLERİ</span></h1>
-          <p class="lead">Güvenli ve Profesyonel Çözümler</p>
-          <div class="hero-ctas">
-            <button class="btn primary" id="open-quote">TEKLİF AL</button>
-            <a class="btn ghost" href="https://wa.me/905551234567" target="_blank" rel="noopener">WHATSAPP İLETİŞİM</a>
-          </div>
-        </div>
-        <div class="hero-right">
-          <img class="hero-image" src="https://images.unsplash.com/photo-1520719627572-46c3f8e6d4ad?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=3b1f0f3f8b9d7db31d2b0b9b2a5ad1b0" alt="Endüstriyel kepenk">
-        </div>
-      </div>
-    </section>
-
-    <section class="products container">
-      <h2 class="section-title">ÜRÜNLERİMİZ</h2>
-      <div class="product-grid">
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1606096214103-a1cc4b4f3c3b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=b3a0b2f4f7f3c1b6bed9f2a9c9c4d7d9" alt="Kepenk">
-          <div class="card-caption">KEPENK</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1a8a2b9b6b6b2c8a4f1a7e2c8f3a1c2" alt="Yana kayar bahçe kapısı">
-          <div class="card-caption">YANA KAYAR BAHÇE KAPISI</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1581092795367-42b7a5a0f6f2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=fae3b1c9b7a6d4e3f2c1b0a9e8d7c6b5" alt="Bariyer">
-          <div class="card-caption">BARİYER</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1541832672-4bdc7b9f8b3b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9b4e3f7c6d5a2b1c3d4e5f6a7b8c9d0e" alt="Endüstriyel kapı">
-          <div class="card-caption">ENDÜSTRİYEL KAPI</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1567016545201-4fb6d2a6b6d6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f" alt="Cam balkon">
-          <div class="card-caption">CAM BALKON</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1595009343222-8e9a7f2c1b3f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=e1f2a3b4c5d6e7f8090a1b2c3d4e5f6a" alt="Korkuluk">
-          <div class="card-caption">KORKULUK</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1581091012184-59cf7e6a4e8f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7" alt="Hızlı PVC kapı">
-          <div class="card-caption">HIZLI PVC KAPI</div>
-        </article>
-        <article class="product-card">
-          <img src="https://images.unsplash.com/photo-1514790193030-c89d266d5a9d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d" alt="Yükleme rampası">
-          <div class="card-caption">YÜKLEME RAMPASI</div>
-        </article>
-      </div>
-    </section>
-
-    <section class="cta-panels container">
-      <div class="panel">
-        <h3>TEKLİF ALIN</h3>
-        <p>Size özel fiyat teklifleri için bizimle iletişime geçin.</p>
-        <button class="btn primary" id="open-quote-2">TEKLİF AL</button>
-      </div>
-      <div class="panel whatsapp">
-        <h3>WHATSAPP İLETİŞİM</h3>
-        <p>Hızlı iletişim için WhatsApp üzerinden bize ulaşın.</p>
-        <a class="btn whatsapp-btn" href="https://wa.me/905551234567" target="_blank" rel="noopener">MESAJ GÖNDER</a>
-      </div>
-      <div class="panel support">
-        <h3>ARIZA DESTEK</h3>
-        <p>7/24 Arıza ve Servis hizmetimizle yanınızdayız.</p>
-        <a class="btn ghost" href="#">DESTEK HATTI</a>
-      </div>
-    </section>
-
-    <section class="contact container">
-      <h4>İletişim</h4>
-      <ul class="contact-list">
-        <li><strong>Adres:</strong> Örnek Mah., İş Merkezi, İstanbul</li>
-        <li><strong>Telefon:</strong> 0555 123 45 67</li>
-        <li><strong>Email:</strong> info@siteadresiniz.com</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="site-footer">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <p>© 2024 Kepenk Sistemleri. Tüm Hakları Saklıdır.</p>
-      <div class="socials">
-        <a href="#" aria-label="facebook">f</a>
-        <a href="#" aria-label="instagram">ig</a>
-        <a href="#" aria-label="email">@</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Modal Teklif -->
-  <div class="modal" id="quoteModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <button class="modal-close" id="closeModal" aria-label="kapat">&times;</button>
-      <h3>Teklif Al</h3>
-      <form id="quoteForm">
-        <label>Ad Soyad<input type="text" name="name" required></label>
-        <label>Telefon<input type="tel" name="phone" required></label>
-        <label>Mesaj<textarea name="message" rows="4"></textarea></label>
-        <div class="modal-actions">
-          <button class="btn primary" type="submit">Gönder</button>
-          <button class="btn ghost" type="button" id="modalCancel">İptal</button>
+        <a class="navbar-brand brand" href="#">VİSİON<span>GATE</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Ana Sayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="#urunler">Hizmetlerimiz</a></li>
+                <li class="nav-item"><a class="nav-link" href="#ariza">Arıza Kaydı</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-outline-warning ms-lg-3 px-3" href="#teklif">Teklif Al</a></li>
+            </ul>
         </div>
-      </form>
     </div>
-  </div>
+</nav>
 
+<div id="announcement-bar"></div>
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="badge bg-warning text-dark mb-3 px-3 py-2">KEPENK & YAPI DEKORASYON</div>
+                <h1 class="hero-title">VİSİON GATE <br><span>ÇÖZÜM MERKEZİ</span></h1>
+                <p class="lead text-secondary mt-4 mb-5">Otomatik kapı sistemlerinden, anahtar teslim ev tadilatına kadar YusufORHAN güvencesiyle Mersin'in tek adresi.</p>
+                <div class="d-flex gap-4">
+                    <div><h3 class="mb-0">15+</h3><small class="text-secondary">Yıl Tecrübe</small></div>
+                    <div class="vr"></div>
+                    <div><h3 class="mb-0">Mersin</h3><small class="text-secondary">Akdeniz Bölgesi</small></div>
+                </div>
+            </div>
+            <div class="col-lg-5" id="teklif" data-aos="fade-left">
+                <div class="glass-card p-4" style="background: rgba(18,18,18,0.95);">
+                    <h3 class="mb-4">Hızlı Teklif Formu</h3>
+                    <form id="teklifForm">
+                        <input type="text" id="ad" class="form-input" placeholder="Adınız Soyadınız" required>
+                        <input type="tel" id="tel" class="form-input" placeholder="Telefonunuz" required>
+                        <select id="hizmet" class="form-input">
+                            <option selected disabled>Hizmet Seçiniz</option>
+                            <option>Otomatik Çelik Kepenk</option>
+                            <option>Alüminyum Kepenk</option>
+                            <option>Seksiyonel Kapı</option>
+                            <option>Fotoselli Kapı</option>
+                            <option>Hızlı PVC Kapı</option>
+                            <option>Bahçe Kapı Motoru</option>
+                            <option>Garaj Kapısı</option>
+                            <option>Yangın Kapısı</option>
+                            <option>Ev Dekorasyonu & Tadilat</option>
+                            <option>Anahtar Teslim Dekorasyon</option>
+                            <option>Su & Elektrik Tesisatı</option>
+                            <option>Doğalgaz Tesisatı</option>
+                        </select>
+                        <textarea id="not" class="form-input" rows="2" placeholder="Talebiniz..."></textarea>
+                        <button type="submit" class="btn btn-premium">Hemen Gönder</button>
+                    </form>
+                    <div id="teklifSuccess" class="alert alert-success mt-2 d-none">Talebiniz başarıyla iletildi!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="urunler" class="py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-6 fw-bold">ÜRÜN VE <span class="text-warning">HİZMETLERİMİZ</span></h2>
+            <p class="text-secondary">Profesyonel kadro, kaliteli malzeme, zamanında teslimat.</p>
+        </div>
+        <div class="row g-4">
+            <script>
+                const urunler = ["Çelik Kepenk", "Alüminyum Kepenk", "Seksiyonel Kapı", "Fotoselli Kapı", "Hızlı PVC Kapı", "Bahçe Kapı Motoru", "Garaj Kapısı", "Yangın Kapısı", "Ev Dekorasyonu & Tadilat", "Anahtar Teslim Dekorasyon", "Su & Elektrik Tesisatı", "Doğalgaz Tesisatı"];
+                const resimler = [
+                    "https://images.unsplash.com/photo-1517646133068-452818d6a8b1?q=80&w=600",
+                    "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=600",
+                    "https://images.unsplash.com/photo-1595846519845-68e298c2edd8?q=80&w=600",
+                    "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600",
+                    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=600",
+                    "https://images.unsplash.com/photo-1557310579-d191d84814df?q=80&w=600",
+                    "https://images.unsplash.com/photo-1583845112203-b05425e4a5d8?q=80&w=600",
+                    "https://images.unsplash.com/photo-1634560799659-54d6eb9a14a7?q=80&w=600",
+                    "https://images.unsplash.com/photo-1581094794329-cdac82aadbcc?q=80&w=600",
+                    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=600",
+                    "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?q=80&w=600",
+                    "https://images.unsplash.com/photo-1507494924047-60b8ee696910?q=80&w=600"
+                ];
+
+                for(let i=0; i<12; i++) {
+                    let detay = i < 8 ? "Yüksek dayanıklılık, sessiz çalışma ve 2 yıl tam garanti." : "Anahtar teslim profesyonel uygulama ve mimari çözümler.";
+                    document.write(`
+                    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="${i*50}">
+                        <div class="glass-card">
+                            <img src="${resimler[i]}" class="product-img" alt="${urunler[i]}">
+                            <div class="p-3 text-center">
+                                <h6 class="text-warning small fw-bold">${urunler[i]}</h6>
+                                <button type="button" class="btn btn-sm btn-outline-warning mt-2 w-100" data-bs-toggle="modal" data-bs-target="#modal${i}">İNCELE</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modal${i}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-warning">${urunler[i]}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img src="${resimler[i]}" class="img-fluid rounded mb-3 w-100">
+                                    <p class="text-light">${detay}</p>
+                                </div>
+                                <div class="modal-footer justify-content-center border-0">
+                                    <a href="#teklif" class="btn btn-premium btn-sm" onclick="bootstrap.Modal.getInstance(document.getElementById('modal${i}')).hide()">BİLGİ AL</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+                }
+            </script>
+        </div>
+    </div>
+</section>
+
+<section id="ariza" class="py-5" style="background: #050505;">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="glass-card p-4 p-md-5 border-warning">
+                    <h3 class="text-center mb-4"><i class="fas fa-tools text-warning me-2"></i>7/24 Teknik Servis Kaydı</h3>
+                    <form id="arizaForm" class="row g-3">
+                        <div class="col-md-6"><input type="text" id="arizaAd" class="form-input" placeholder="Ad Soyad / Firma" required></div>
+                        <div class="col-md-6"><input type="tel" id="arizaTel" class="form-input" placeholder="İletişim Tel" required></div>
+                        <div class="col-12"><textarea id="arizaNot" class="form-input" rows="3" placeholder="Arıza durumunu yazınız..."></textarea></div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-warning fw-bold w-100 py-3">BİZE İLETİN</button>
+                        </div>
+                    </form>
+                    <div id="arizaSuccess" class="alert alert-success mt-2 d-none">Arıza kaydınız oluşturuldu. Ekibimiz arayacak.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4 text-center text-lg-start">
+                <div class="brand fs-3 mb-3">VİSİON<span>GATE</span></div>
+                <p class="text-secondary small">Mersin'in lider yapı ve otomasyon firması olarak YusufORHAN liderliğinde hizmetinizdeyiz.</p>
+                <div class="mt-3">
+                    <a href="https://www.instagram.com/visiongate_?igsh=MWp2Ymk1c2xxMHRjaQ%3D%3D" target="_blank" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:visiongateotomatikkapisistemle@gmail.com" class="text-white fs-4"><i class="far fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <h5 class="mb-3 text-warning">İletişim Bilgileri</h5>
+                <div class="contact-info small text-secondary">
+                    <p><i class="fas fa-map-marker-alt"></i> Güneş Mah. Okan Merzeci Bulv. Dış Kapı No:77B Akdeniz/Mersin</p>
+                    <p><i class="fas fa-phone-alt"></i> +90 (539) 350 03 56</p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <p class="text-secondary small mb-1">Vision Gate © 2025</p>
+                <p class="text-warning fw-bold mb-1">YusufORHAN</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<a href="https://wa.me/905393500356" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i><span class="wa-text">WhatsApp Destek</span>
+</a>
+
+<script>
+    // FIREBASE YAPILANDIRMASI (Firebase Console'dan alacağın bilgiler buraya gelecek)
+    const firebaseConfig = {
+        apiKey: "BURAYA_API_KEY_GELECEK",
+        authDomain: "PROJE_ID.firebaseapp.com",
+        projectId: "PROJE_ID",
+        storageBucket: "PROJE_ID.appspot.com",
+        messagingSenderId: "SENDER_ID",
+        appId: "APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // DUYURU ÇEKME
+    db.collection("ayarlar").doc("duyuru").onSnapshot((doc) => {
+        const bar = document.getElementById("announcement-bar");
+        if (doc.exists && doc.data().aktif) {
+            bar.innerText = doc.data().mesaj;
+            bar.style.display = "block";
+        } else {
+            bar.style.display = "none";
+        }
+    });
+
+    // TEKLİF GÖNDERME
+    document.getElementById("teklifForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        db.collection("teklifler").add({
+            ad: document.getElementById("ad").value,
+            tel: document.getElementById("tel").value,
+            hizmet: document.getElementById("hizmet").value,
+            not: document.getElementById("not").value,
+            tarih: new Date().toLocaleString("tr-TR")
+        }).then(() => {
+            document.getElementById("teklifSuccess").classList.remove("d-none");
+            document.getElementById("teklifForm").reset();
+        });
+    });
+
+    // ARIZA GÖNDERME
+    document.getElementById("arizaForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        db.collection("arizalar").add({
+            ad: document.getElementById("arizaAd").value,
+            tel: document.getElementById("arizaTel").value,
+            not: document.getElementById("arizaNot").value,
+            tarih: new Date().toLocaleString("tr-TR")
+        }).then(() => {
+            document.getElementById("arizaSuccess").classList.remove("d-none");
+            document.getElementById("arizaForm").reset();
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({duration: 1000, once: true});</script>
 </body>
 </html>
