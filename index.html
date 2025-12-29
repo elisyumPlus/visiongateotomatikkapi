@@ -40,7 +40,7 @@
         .product-details li { padding: 4px 0; border-bottom: 1px solid #222; }
         .product-details li i { color: var(--accent); margin-right: 8px; }
 
-        /* ARIZA FORMU (GÖRSELDEKİ TASARIM) */
+        /* ARIZA FORMU */
         .ariza-container { border: 1px solid var(--accent); border-radius: 25px; padding: 40px; background: #0a0a0a; box-shadow: 0 0 20px rgba(255, 140, 0, 0.1); }
         .ariza-title { color: var(--accent); font-weight: 700; text-align: center; margin-bottom: 25px; }
 
@@ -108,22 +108,23 @@
         <h2 class="text-center mb-5">ÜRÜNLERİMİZ & <span class="text-warning">HİZMETLERİMİZ</span></h2>
         <div class="row g-4">
             <script>
+                // NOT: 'r' kısmına img/ klasöründeki gerçek dosya isimlerini yazmalısın.
                 const liste = [
-                    { t: "Otomatik Kepenk", d: ["Çelik Galveniz", "Alüminyum Poliüretanlı", "Uzaktan Kumandalı", "UPS Güç Kaynağı"] },
-                    { t: "Şeffaf Kepenk", d: ["Polikarbon Gövde", "Vitrin Görünürlüğü", "Yüksek Darbe Direnci", "Estetik Tasarım"] },
-                    { t: "Bahçe Kapısı", d: ["Yana Kayar Motor", "Fotoselli Güvenlik", "Ağır Tip Motorlar", "Mersin Geneli Montaj"] },
-                    { t: "Bariyer Sistemleri", d: ["Hızlı Geçiş", "Plaka Okuma Uyumu", "Flaşör Lamba", "Emniyet Fotoseli"] },
-                    { t: "Endüstriyel Kapı", d: ["Fabrika Tipi", "Yüksek Yalıtım", "Pencereli Panel", "Halat Kopma Emniyeti"] },
-                    { t: "Cam Balkon", d: ["Katlanır Sistem", "Isı Camlı", "Paslanmaz Raylar", "Farklı Renk Seçeneği"] },
-                    { t: "Korkuluk", d: ["Alüminyum Küpeşte", "Camlı Korkuluk", "Merdiven & Balkon", "Paslanmaz Malzeme"] },
-                    { t: "Hızlı PVC Kapı", d: ["Branda Kapı", "Sektörel Geçiş", "Rüzgar Çıtası", "Otomatik Radar"] },
-                    { t: "Yükleme Rampası", d: ["Hidrolik Sistem", "Menteşeli Dil", "Emniyet Valfi", "Yüksek Tonaj Kapasitesi"] },
-                    { t: "Duşakabin", d: ["Temperli Cam", "Siyah & Krom Profil", "Mıknatıslı Kapı", "Özel Ölçü Üretim"] },
-                    { t: "Pimapen Kapı & Pencere", d: ["Isı Yalıtımlı", "Çift Açılır Sistem", "Sineklik Desteği", "Renk Seçenekleri"] },
-                    { t: "Pergole & Giyotin", d: ["Işıklı Sistem", "Motorlu Açılır-Kapanır", "Su Tahliye Kanalı", "Kış Bahçesi Uyumu"] },
-                    { t: "Anahtar Teslim Dekor", d: ["Alçıpan & Boya", "Asma Tavan", "Mutfak Dolabı", "Komple Tadilat"] },
-                    { t: "Su & Elektrik Tesisatı", d: ["Sıfır Tesisat", "Arıza Onarım", "Kaliteli Malzeme", "7/24 Teknik Destek"] },
-                    { t: "Doğalgaz Tesisatı", d: ["Proje Çizimi", "Kombi Montajı", "Radyatör Kurulumu", "Yetkili Firma Güvencesi"] }
+                    { t: "Otomatik Kepenk", r: "img/kapi.jpg", d: ["Çelik Galveniz", "Alüminyum Poliüretanlı", "Uzaktan Kumandalı", "UPS Güç Kaynağı"] },
+                    { t: "Şeffaf Kepenk", r: "img/seffaf.jpg", d: ["Polikarbon Gövde", "Vitrin Görünürlüğü", "Yüksek Darbe Direnci", "Estetik Tasarım"] },
+                    { t: "Bahçe Kapısı", r: "img/bahce.jpg", d: ["Yana Kayar Motor", "Fotoselli Güvenlik", "Ağır Tip Motorlar", "Mersin Geneli Montaj"] },
+                    { t: "Bariyer Sistemleri", r: "img/bariyer.jpg", d: ["Hızlı Geçiş", "Plaka Okuma Uyumu", "Flaşör Lamba", "Emniyet Fotoseli"] },
+                    { t: "Endüstriyel Kapı", r: "img/endustriyel.jpg", d: ["Fabrika Tipi", "Yüksek Yalıtım", "Pencereli Panel", "Halat Kopma Emniyeti"] },
+                    { t: "Cam Balkon", r: "img/cambalkon.jpg", d: ["Katlanır Sistem", "Isı Camlı", "Paslanmaz Raylar", "Farklı Renk Seçeneği"] },
+                    { t: "Korkuluk", r: "img/korkuluk.jpg", d: ["Alüminyum Küpeşte", "Camlı Korkuluk", "Merdiven & Balkon", "Paslanmaz Malzeme"] },
+                    { t: "Hızlı PVC Kapı", r: "img/pvc.jpg", d: ["Branda Kapı", "Sektörel Geçiş", "Rüzgar Çıtası", "Otomatik Radar"] },
+                    { t: "Yükleme Rampası", r: "img/rampa.jpg", d: ["Hidrolik Sistem", "Menteşeli Dil", "Emniyet Valfi", "Yüksek Tonaj Kapasitesi"] },
+                    { t: "Duşakabin", r: "img/dusakabin.jpg", d: ["Temperli Cam", "Siyah & Krom Profil", "Mıknatıslı Kapı", "Özel Ölçü Üretim"] },
+                    { t: "Pimapen Kapı & Pencere", r: "img/pimapen.jpg", d: ["Isı Yalıtımlı", "Çift Açılır Sistem", "Sineklik Desteği", "Renk Seçenekleri"] },
+                    { t: "Pergole & Giyotin", r: "img/pergole.jpg", d: ["Işıklı Sistem", "Motorlu Açılır-Kapanır", "Su Tahliye Kanalı", "Kış Bahçesi Uyumu"] },
+                    { t: "Anahtar Teslim Dekor", r: "img/dekor.jpg", d: ["Alçıpan & Boya", "Asma Tavan", "Mutfak Dolabı", "Komple Tadilat"] },
+                    { t: "Su & Elektrik Tesisatı", r: "img/tesisat.jpg", d: ["Sıfır Tesisat", "Arıza Onarım", "Kaliteli Malzeme", "7/24 Teknik Destek"] },
+                    { t: "Doğalgaz Tesisatı", r: "img/dogalgaz.jpg", d: ["Proje Çizimi", "Kombi Montajı", "Radyatör Kurulumu", "Yetkili Firma Güvencesi"] }
                 ];
 
                 liste.forEach((u, i) => {
@@ -131,7 +132,9 @@
                     <div class="col-lg-3 col-md-6" data-aos="zoom-in">
                         <div class="product-box">
                             <div id="img-w-${i}">
-                                <div class="product-img-wrapper"><img src="https://picsum.photos/400/300?sig=${i+50}"></div>
+                                <div class="product-img-wrapper">
+                                    <img src="${u.r}" alt="${u.t}" onerror="this.src='https://via.placeholder.com/400x300?text=Resim+Hazirlaniyor'">
+                                </div>
                                 <div class="p-3 text-center">
                                     <h6 class="text-warning fw-bold small">${u.t}</h6>
                                     <button onclick="showD(${i})" class="btn btn-sm btn-outline-warning w-100 mt-2">DETAYLAR</button>
@@ -180,7 +183,7 @@
                 <h2 class="fw-bold mb-4">BİZ <span class="text-warning">KİMİZ?</span></h2>
                 <p class="text-secondary">VİSİON GATE liderliğinde Mersin'de kurulan, yapı otomasyonu ve iç dekorasyon alanında uzmanlaşmış bir firmadır. "Güven Kapınızda Başlar" vizyonuyla, en son teknolojiyi estetikle buluşturuyoruz.</p>
                 <div class="mt-4">
-                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800" class="img-fluid rounded-4 border border-secondary shadow">
+                    <img src="img/hakkimizda.jpg" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800'" class="img-fluid rounded-4 border border-secondary shadow">
                 </div>
             </div>
             <div class="col-lg-6">
