@@ -1,542 +1,621 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VİSİON GATE | Architectural Systems</title>
+    <title>VisionGate Kepenk | Otomatik Sistemler</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+    <!-- Tailwind Config for Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            orange: '#F97316', /* Turuncu Vurgu */
+                            black: '#030712',  /* En Koyu Siyah (Arka planlar) */
+                            dark: '#111827',   /* Koyu Gri (Kartlar vs) */
+                            gray: '#1F2937'    /* İkincil Gri */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        /* --- GENEL AYARLAR --- */
-        :root { 
-            --accent: #ff8c00; 
-            --accent-glow: rgba(255, 140, 0, 0.4);
-            --bg-dark: #050505; 
-            --card-bg: #111111; 
-            --text-grey: #b0b0b0;
+        /* Ekstra sade animasyonlar için */
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
         }
-        
-        body { 
-            background-color: var(--bg-dark); 
-            color: #ffffff; 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        h1, h2, h3, h4, h5, .brand { 
-            font-family: 'Orbitron', sans-serif; 
-            letter-spacing: 1.5px; 
+        /* Özel Scrollbar Koyu Tema Uyumlu */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
-
-        /* --- NAVBAR & DİL MENÜSÜ --- */
-        .navbar { 
-            background: rgba(5, 5, 5, 0.9) !important; 
-            backdrop-filter: blur(20px); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-            padding: 20px 0; 
-            transition: all 0.4s ease;
+        ::-webkit-scrollbar-track {
+            background: #111827;
         }
-        
-        .navbar-brand { font-weight: 900; font-size: 1.5rem; }
-        .navbar-brand span { color: var(--accent); }
-
-        .nav-link { 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            color: #fff !important; 
-            margin: 0 15px; 
-            position: relative;
-            transition: 0.3s;
+        ::-webkit-scrollbar-thumb {
+            background: #F97316;
+            border-radius: 5px;
         }
-        
-        .nav-link::after {
-            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
-            background: var(--accent); transition: 0.3s;
-        }
-        .nav-link:hover::after { width: 100%; }
-
-        /* Yeni Dil Dropdown */
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-        .lang-btn:hover { background: var(--accent); border-color: var(--accent); color: black; }
-        .dropdown-menu-dark { background: #1a1a1a; border: 1px solid #333; }
-        .dropdown-item { font-size: 0.9rem; padding: 10px 20px; cursor: pointer; }
-        .dropdown-item:hover { background: var(--accent); color: black; }
-
-        /* --- FORMLAR & KARTLAR --- */
-        .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .form-control, .form-select {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #333;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-        }
-        .form-control:focus, .form-select:focus {
-            background: black;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
-            color: white;
-        }
-
-        .btn-premium {
-            background: linear-gradient(45deg, var(--accent), #ff5e00);
-            color: white;
-            font-weight: 700;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-            transition: 0.3s;
-            box-shadow: 0 5px 20px rgba(255, 140, 0, 0.2);
-        }
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 140, 0, 0.4);
-        }
-
-        /* --- ÜRÜN KARTLARI --- */
-        .product-card {
-            background: #0f0f0f;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: all 0.4s ease;
-            position: relative;
-            height: 400px;
-        }
-        .product-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px var(--accent-glow);
-            transform: translateY(-10px);
-        }
-        
-        .card-img-box { height: 240px; width: 100%; overflow: hidden; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .product-card:hover .card-img-box img { transform: scale(1.1); }
-        
-        .card-content { padding: 20px; text-align: center; }
-        
-        /* Detay Alanı (Slide Up Efekti) */
-        .card-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.4s ease;
-        }
-        .card-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        
-        .card-overlay ul { text-align: left; padding-left: 0; list-style: none; color: #ccc; font-size: 0.9rem; }
-        .card-overlay li { margin-bottom: 8px; border-bottom: 1px solid #222; padding-bottom: 5px; }
-        .card-overlay li i { color: var(--accent); margin-right: 10px; }
-
-        /* --- OTHER --- */
-        .whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px;
-            background: #25d366; color: white;
-            padding: 12px 25px; border-radius: 50px;
-            font-weight: bold; text-decoration: none;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
-            z-index: 999; display: flex; align-items: center; gap: 10px;
-            transition: 0.3s;
-        }
-        .whatsapp-float:hover { transform: scale(1.05); color: white; }
-
-        /* RTL Ayarları */
-        [dir="rtl"] { text-align: right; }
-        [dir="rtl"] .card-overlay ul { text-align: right; }
-        [dir="rtl"] .whatsapp-float { right: auto; left: 30px; flex-direction: row-reverse; }
-        [dir="rtl"] .dropdown-menu { text-align: right; }
-        [dir="rtl"] .ms-auto { margin-right: auto !important; margin-left: 0 !important; }
-        [dir="rtl"] .nav-link { margin: 0 15px; }
     </style>
 </head>
-<body>
+<body class="font-sans bg-brand-black text-gray-300 antialiased selection:bg-brand-orange selection:text-white">
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand brand" href="#">VİSİON<span>GATE</span></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="#" data-k="nav_home">Ana Sayfa</a></li>
-                <li class="nav-item"><a class="nav-link" href="#urunler" data-k="nav_prod">Ürünler</a></li>
-                <li class="nav-item"><a class="nav-link" href="#ariza" data-k="nav_serv">Servis</a></li>
-                <li class="nav-item dropdown ms-lg-3">
-                    <a class="nav-link dropdown-toggle lang-btn" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-globe"></i> <span id="currentLang">TR</span>
+    <nav class="bg-brand-dark/95 backdrop-blur-sm border-b border-gray-800 text-white fixed w-full z-50 top-0 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tighter">
+                        <span class="text-white">VİSİON</span><span class="text-brand-orange">GATE</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" onclick="setLang('tr')">🇹🇷 Türkçe</a></li>
-                        <li><a class="dropdown-item" onclick="setLang('en')">🇬🇧 English</a></li>
-                        <li><a class="dropdown-item" onclick="setLang('ar')">🇸🇦 العربية</a></li>
-                        <li><a class="dropdown-item" onclick="setLang('ru')">🇷🇺 Русский</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-gray-300 hover:text-brand-orange transition-colors duration-300 font-medium">
+                        <span class="lang-tr">Ana Sayfa</span><span class="lang-en hidden">Home</span>
+                    </a>
+                    <a href="#hizmetler" class="text-gray-300 hover:text-brand-orange transition-colors duration-300 font-medium">
+                        <span class="lang-tr">Hizmetler</span><span class="lang-en hidden">Services</span>
+                    </a>
+                    <a href="#urunler" class="text-gray-300 hover:text-brand-orange transition-colors duration-300 font-medium">
+                        <span class="lang-tr">Ürünler</span><span class="lang-en hidden">Products</span>
+                    </a>
+                    <a href="#iletisim" class="text-gray-300 hover:text-brand-orange transition-colors duration-300 font-medium">
+                        <span class="lang-tr">İletişim</span><span class="lang-en hidden">Contact</span>
+                    </a>
+                    
+                    <!-- Language Toggle -->
+                    <button onclick="toggleLang()" class="flex items-center space-x-1 text-sm font-bold bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-md border border-gray-600 transition-colors">
+                        <i class="fas fa-globe text-brand-orange"></i>
+                        <span id="lang-btn-text">EN</span>
+                    </button>
 
-<section class="d-flex align-items-center" style="min-height: 100vh; padding-top: 80px;">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7 mb-5 mb-lg-0" data-aos="fade-right">
-                <h1 class="display-3 fw-bold mb-4 lh-sm" data-k="hero_t">
-                    PROFESYONEL<br><span style="color:var(--accent)">ÇÖZÜMLER</span>
-                </h1>
-                <p class="lead text-secondary mb-4 w-75" data-k="hero_d">
-                    Mersin'in her noktasına Vision Gate güvencesiyle otomasyon, kepenk ve dekorasyon hizmeti.
-                </p>
-                <div class="d-flex gap-3">
-                    <a href="#urunler" class="btn btn-outline-light px-4 py-3 rounded-pill" data-k="nav_prod">Ürünleri İncele</a>
-                    <a href="#teklif" class="btn btn-premium px-4 py-3 rounded-pill" style="width: auto;" data-k="btn_t">Teklif Al</a>
+                    <a href="#iletisim" class="bg-brand-orange text-white px-5 py-2 rounded-md hover:bg-orange-600 transition-colors duration-300 font-semibold shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+                        <span class="lang-tr">Teklif Al</span><span class="lang-en hidden">Get Quote</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <button onclick="toggleLang()" class="text-sm font-bold bg-gray-800 px-2 py-1 rounded border border-gray-600 text-white">
+                        <span id="lang-btn-text-mobile">EN</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-brand-orange focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
-            <div class="col-lg-5" data-aos="fade-left">
-                <div class="glass-card" id="teklif">
-                    <h4 class="mb-4 text-center brand" data-k="form_t">Hızlı Teklif</h4>
-                    <form id="teklifForm">
-                        <div class="mb-3">
-                            <input type="text" id="tAd" class="form-control" placeholder="Ad Soyad" required>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-orange hover:bg-gray-800 rounded-md">
+                    <span class="lang-tr">Ana Sayfa</span><span class="lang-en hidden">Home</span>
+                </a>
+                <a href="#hizmetler" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-orange hover:bg-gray-800 rounded-md">
+                    <span class="lang-tr">Hizmetler</span><span class="lang-en hidden">Services</span>
+                </a>
+                <a href="#urunler" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-orange hover:bg-gray-800 rounded-md">
+                    <span class="lang-tr">Ürünler</span><span class="lang-en hidden">Products</span>
+                </a>
+                <a href="#iletisim" class="block px-3 py-2 text-base font-medium text-brand-orange hover:text-white hover:bg-brand-orange rounded-md">
+                    <span class="lang-tr">Teklif Al</span><span class="lang-en hidden">Get Quote</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative pt-20 pb-32 flex items-center min-h-[85vh] bg-brand-black overflow-hidden fade-in">
+        <!-- AI Generated Background Image for Hero -->
+        <div class="absolute inset-0 opacity-20">
+            <img src="https://image.pollinations.ai/prompt/dark%20modern%20industrial%20warehouse%20with%20orange%20neon%20lights%20and%20steel%20roller%20shutters?width=1920&height=1080&nologo=true&seed=55" alt="Background" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/80 to-transparent"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-2xl">
+                <span class="text-brand-orange font-bold tracking-widest uppercase text-sm mb-4 block flex items-center">
+                    <div class="w-8 h-0.5 bg-brand-orange mr-3"></div>
+                    <span class="lang-tr">VisionGate Sistemleri</span><span class="lang-en hidden">VisionGate Systems</span>
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                    <span class="lang-tr">Geleceğin <br/><span class="text-brand-orange">Güvenliği</span> Burada.</span>
+                    <span class="lang-en hidden">Future of <br/><span class="text-brand-orange">Security</span> is Here.</span>
+                </h1>
+                <p class="text-gray-400 text-lg mb-10 leading-relaxed max-w-xl">
+                    <span class="lang-tr">Yapay zeka destekli, modern, estetik ve sağlam otomatik kepenk, kapı sistemleri ile endüstriyel ve bireysel alanlarınızı güvenceye alın.</span>
+                    <span class="lang-en hidden">Secure your industrial and personal spaces with AI-supported, modern, aesthetic, and robust automatic shutter and door systems.</span>
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#urunler" class="bg-brand-orange hover:bg-orange-600 text-white text-center px-8 py-4 rounded-md font-semibold text-lg transition-all shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)]">
+                        <span class="lang-tr">Ürünlerimizi İnceleyin</span><span class="lang-en hidden">Explore Products</span>
+                    </a>
+                    <a href="#iletisim" class="bg-transparent border border-gray-600 hover:border-brand-orange hover:text-brand-orange text-white text-center px-8 py-4 rounded-md font-semibold text-lg transition-all">
+                        <span class="lang-tr">İletişime Geç</span><span class="lang-en hidden">Contact Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hizmetler" class="py-20 bg-brand-dark border-y border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="lang-tr">Neden VisionGate?</span><span class="lang-en hidden">Why VisionGate?</span>
+                </h2>
+                <div class="w-20 h-1 bg-brand-orange mx-auto"></div>
+                <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+                    <span class="lang-tr">Modern teknoloji ve üstün malzeme kalitesiyle maksimum performans sunuyoruz.</span>
+                    <span class="lang-en hidden">We offer maximum performance with modern technology and superior material quality.</span>
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 border border-gray-700 rounded-xl hover:border-brand-orange transition-colors duration-300 group bg-brand-black text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/5 rounded-bl-full -z-10 group-hover:bg-brand-orange/20 transition-colors"></div>
+                    <div class="w-16 h-16 bg-gray-800 border border-gray-700 text-brand-orange rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-orange group-hover:text-white transition-all shadow-lg">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">
+                        <span class="lang-tr">Maksimum Güvenlik</span><span class="lang-en hidden">Maximum Security</span>
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        <span class="lang-tr">Zırhlı profiller ve akıllı kilit sistemleri ile dış müdahalelere karşı tam koruma.</span>
+                        <span class="lang-en hidden">Full protection against external interference with armored profiles and smart lock systems.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="p-8 border border-gray-700 rounded-xl hover:border-brand-orange transition-colors duration-300 group bg-brand-black text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/5 rounded-bl-full -z-10 group-hover:bg-brand-orange/20 transition-colors"></div>
+                    <div class="w-16 h-16 bg-gray-800 border border-gray-700 text-brand-orange rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-orange group-hover:text-white transition-all shadow-lg">
+                        <i class="fas fa-microchip text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">
+                        <span class="lang-tr">Akıllı Otomasyon</span><span class="lang-en hidden">Smart Automation</span>
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        <span class="lang-tr">Telefon veya kumanda ile uzaktan erişim, sessiz çalışan güçlü yeni nesil motorlar.</span>
+                        <span class="lang-en hidden">Remote access via phone or remote, powerful next-generation silent motors.</span>
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="p-8 border border-gray-700 rounded-xl hover:border-brand-orange transition-colors duration-300 group bg-brand-black text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/5 rounded-bl-full -z-10 group-hover:bg-brand-orange/20 transition-colors"></div>
+                    <div class="w-16 h-16 bg-gray-800 border border-gray-700 text-brand-orange rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-orange group-hover:text-white transition-all shadow-lg">
+                        <i class="fas fa-headset text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">
+                        <span class="lang-tr">7/24 Kesintisiz Destek</span><span class="lang-en hidden">24/7 Uninterrupted Support</span>
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        <span class="lang-tr">Mersin şubemiz başta olmak üzere profesyonel servis ağımızla anında müdahale.</span>
+                        <span class="lang-en hidden">Immediate intervention with our professional service network, primarily our Mersin branch.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="urunler" class="py-20 bg-brand-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <span class="lang-tr">Ürün Çeşitlerimiz</span><span class="lang-en hidden">Our Products</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-brand-orange"></div>
+                    <p class="mt-4 text-gray-400 max-w-xl">
+                        <span class="lang-tr">Yapay zeka konseptleriyle güçlendirilmiş 12 farklı yüksek kaliteli sistem çözümü.</span>
+                        <span class="lang-en hidden">12 different high-quality system solutions enhanced with AI concepts.</span>
+                    </p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <span class="px-4 py-2 bg-gray-900 border border-brand-orange/50 text-brand-orange text-sm rounded-full font-medium">
+                        <i class="fas fa-robot mr-2"></i>AI Generated Visuals
+                    </span>
+                </div>
+            </div>
+
+            <!-- Products Grid (Populated by JS) -->
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will inject 12 AI products here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-900 py-16 border-y border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-700">
+                <div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-orange mb-2">15+</div>
+                    <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+                        <span class="lang-tr">Yıllık Tecrübe</span><span class="lang-en hidden">Years Experience</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-orange mb-2">5K+</div>
+                    <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+                        <span class="lang-tr">Mutlu Müşteri</span><span class="lang-en hidden">Happy Clients</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-orange mb-2">10K+</div>
+                    <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+                        <span class="lang-tr">Başarılı Montaj</span><span class="lang-en hidden">Installations</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-orange mb-2">7/24</div>
+                    <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+                        <span class="lang-tr">Teknik Servis</span><span class="lang-en hidden">Technical Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="iletisim" class="py-24 bg-brand-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Contact Info -->
+                <div class="flex flex-col justify-center">
+                    <span class="text-brand-orange font-bold uppercase tracking-wider text-sm mb-2">
+                        <span class="lang-tr">Bize Ulaşın</span><span class="lang-en hidden">Contact Us</span>
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                        <span class="lang-tr">Mersin Şubemiz İle İletişime Geçin</span>
+                        <span class="lang-en hidden">Contact Our Mersin Branch</span>
+                    </h2>
+                    <p class="text-gray-400 mb-10 leading-relaxed text-lg">
+                        <span class="lang-tr">VİSİONGATE OTOMATİK KAPI ve KEPENK SİSTEMLERİ olarak, projelerinize özel ücretsiz keşif ve fiyat teklifi sunuyoruz. 7/24 hizmetinizdeyiz.</span>
+                        <span class="lang-en hidden">As VİSİONGATE AUTOMATIC DOOR and SHUTTER SYSTEMS, we offer free exploration and price quotes tailored to your projects. At your service 24/7.</span>
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start group">
+                            <div class="flex-shrink-0 w-14 h-14 bg-gray-800 border border-gray-700 text-brand-orange rounded-xl flex items-center justify-center group-hover:bg-brand-orange group-hover:text-white transition-all shadow-md">
+                                <i class="fas fa-map-marker-alt text-2xl"></i>
+                            </div>
+                            <div class="ml-5">
+                                <h4 class="text-xl font-bold text-white mb-1">
+                                    <span class="lang-tr">Mersin Merkez Adres</span><span class="lang-en hidden">Mersin HQ Address</span>
+                                </h4>
+                                <p class="text-gray-400">Güneş, Hüseyin Okan Merzeci Blv,<br>33010 Akdeniz / Mersin, Türkiye</p>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <input type="tel" id="tTel" class="form-control" placeholder="Telefon" required>
+                        
+                        <div class="flex items-start group">
+                            <div class="flex-shrink-0 w-14 h-14 bg-gray-800 border border-gray-700 text-brand-orange rounded-xl flex items-center justify-center group-hover:bg-brand-orange group-hover:text-white transition-all shadow-md">
+                                <i class="fas fa-phone-alt text-2xl"></i>
+                            </div>
+                            <div class="ml-5">
+                                <h4 class="text-xl font-bold text-white mb-1">
+                                    <span class="lang-tr">7/24 İletişim & Servis</span><span class="lang-en hidden">24/7 Contact & Service</span>
+                                </h4>
+                                <a href="tel:+905393500356" class="text-gray-400 hover:text-brand-orange text-lg transition-colors">+90 539 350 03 56</a>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <select id="tUrun" class="form-select" required>
-                                <option value="" selected disabled data-k="sel_def">Hizmet Seçiniz...</option>
-                                <option>Otomatik Kepenk</option>
-                                <option>Bahçe Kapısı</option>
-                                <option>Dekorasyon</option>
+                        
+                        <div class="flex items-start group">
+                            <div class="flex-shrink-0 w-14 h-14 bg-gray-800 border border-gray-700 text-brand-orange rounded-xl flex items-center justify-center group-hover:bg-brand-orange group-hover:text-white transition-all shadow-md">
+                                <i class="fas fa-globe text-2xl"></i>
+                            </div>
+                            <div class="ml-5">
+                                <h4 class="text-xl font-bold text-white mb-1">
+                                    <span class="lang-tr">Web Adresi</span><span class="lang-en hidden">Website</span>
+                                </h4>
+                                <a href="http://www.visiongateotomatikkapi.com/" target="_blank" class="text-gray-400 hover:text-brand-orange transition-colors">www.visiongateotomatikkapi.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form (Dark Theme) -->
+                <div class="bg-brand-dark p-8 md:p-10 rounded-2xl shadow-2xl border border-gray-700 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-orange/10 blur-3xl rounded-full"></div>
+                    <h3 class="text-2xl font-bold text-white mb-6 relative z-10">
+                        <span class="lang-tr">Hızlı Teklif Formu</span><span class="lang-en hidden">Quick Quote Form</span>
+                    </h3>
+                    <form onsubmit="handleFormSubmit(event)" class="relative z-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">
+                                    <span class="lang-tr">Adınız Soyadınız</span><span class="lang-en hidden">Full Name</span>
+                                </label>
+                                <input type="text" class="w-full px-4 py-3 bg-gray-800 text-white rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all placeholder-gray-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">
+                                    <span class="lang-tr">Telefon Numaranız</span><span class="lang-en hidden">Phone Number</span>
+                                </label>
+                                <input type="tel" class="w-full px-4 py-3 bg-gray-800 text-white rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all placeholder-gray-500" required>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-400 mb-2">
+                                <span class="lang-tr">İlgilendiğiniz Hizmet</span><span class="lang-en hidden">Service of Interest</span>
+                            </label>
+                            <select class="w-full px-4 py-3 bg-gray-800 text-white rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent appearance-none">
+                                <option>Otomatik Çelik Kepenk / Steel Shutter</option>
+                                <option>Alüminyum Kepenk / Aluminum Shutter</option>
+                                <option>Garaj Kapısı / Garage Door</option>
+                                <option>Endüstriyel Kapı / Industrial Door</option>
+                                <option>Tamir & Servis / Repair & Service</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn-premium" data-k="btn_t">GÖNDER</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="urunler" class="py-5" style="background: #0a0a0a;">
-    <div class="container py-5">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h6 class="text-secondary text-uppercase ls-2">VİSİON GATE PRESTIGE</h6>
-            <h2 class="display-5 fw-bold" data-k="prod_t">ÜRÜNLER & <span style="color:var(--accent)">HİZMETLER</span></h2>
-        </div>
-        
-        <div class="row g-4" id="pGrid">
-            </div>
-    </div>
-</section>
-
-<section id="ariza" class="py-5">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8" data-aos="zoom-in">
-                <div class="glass-card text-center p-5 border-warning border-opacity-25">
-                    <div class="mb-4">
-                        <i class="fas fa-headset fa-3x" style="color:var(--accent)"></i>
-                    </div>
-                    <h2 class="mb-4" data-k="serv_t">7/24 TEKNİK SERVİS</h2>
-                    <p class="text-secondary mb-4" data-k="serv_d">Arıza durumunda aşağıdaki formu doldurun, ekiplerimiz en kısa sürede size ulaşsın.</p>
-                    
-                    <form id="arizaForm" class="text-start">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <input type="text" id="aAd" class="form-control" placeholder="Ad Soyad" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="tel" id="aTel" class="form-control" placeholder="Telefon" required>
-                            </div>
-                            <div class="col-12">
-                                <textarea id="aNot" class="form-control" rows="3" placeholder="Arıza detayları..."></textarea>
-                            </div>
-                            <div class="col-12 mt-4">
-                                <button type="submit" class="btn-premium w-100" data-k="btn_s">KAYIT OLUŞTUR</button>
-                            </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-400 mb-2">
+                                <span class="lang-tr">Mesajınız / Keşif Adresi</span><span class="lang-en hidden">Message / Discovery Address</span>
+                            </label>
+                            <textarea rows="4" class="w-full px-4 py-3 bg-gray-800 text-white rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent transition-all resize-none placeholder-gray-500"></textarea>
                         </div>
-                        <div id="aSuccess" class="alert alert-success mt-3 d-none text-center">Kaydınız Başarıyla Alındı!</div>
+                        <button type="submit" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-4 rounded-md transition-all shadow-lg hover:shadow-brand-orange/40 text-lg uppercase tracking-wider">
+                            <span class="lang-tr">Gönder</span><span class="lang-en hidden">Send Message</span>
+                        </button>
                     </form>
                 </div>
+
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<footer class="py-5 border-top border-secondary bg-black text-center">
-    <div class="container">
-        <h3 class="brand mb-3">VİSİON<span>GATE</span></h3>
-        <p class="text-secondary mb-4">Mersin'in Güvenilir Kapı ve Otomasyon Çözüm Ortağı</p>
-        <div class="d-flex justify-content-center gap-4 mb-4">
-            <a href="https://www.instagram.com/visiongate_?igsh=MWp2Ymk1c2xxMHRjaQ==" class="text-secondary fs-4"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.instagram.com/yusfyl3" class="text-secondary fs-4"><i class="fab fa-instagram"></i></a>
-           <a href="mailto:visiongateotomatikkapisistemle@gmail.com?subject=Vision%20Gate%20Hakkinda" class="text-secondary fs-4" title="Bize Mail Atın">
-        <i class="fab fa-google"></i>
-    </a>
-        </div>
-        <p class="text-secondary small mb-0">© 2025 Yusuf ORHAN | Tüm Hakları Saklıdır.</p>
-    </div>
-</footer>
-
-<a href="https://wa.me/905393500356" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp fa-lg"></i> <span data-k="wa">WhatsApp</span>
-</a>
-
-<script>
-    // --- RESİM LİNKLERİ (Buraya Yapıştır) ---
-    const imgLinkfs = [
-         "https://resmim.net/cdn/2026/08/29/EOqgM8.jpg", // 1. Otomatik Kepenk
-    ];
-
-    // --- DİL VERİTABANI ---
-    const dbLang = {
-        tr: {
-            nav_home: "Ana Sayfa", nav_prod: "Ürünler", nav_serv: "Servis",
-            hero_t: "PROFESYONEL<br><span style='color:var(--accent)'>ÇÖZÜMLER</span>",
-            hero_d: "Mersin'in her noktasına Vision Gate güvencesiyle otomasyon, kepenk ve dekorasyon hizmeti.",
-            form_t: "Hızlı Teklif", btn_t: "TEKLİF AL", sel_def: "Hizmet Seçiniz...",
-            prod_t: "ÜRÜNLER & <span style='color:var(--accent)'>HİZMETLER</span>",
-            serv_t: "7/24 TEKNİK SERVİS", serv_d: "Arıza durumunda formu doldurun, size ulaşalım.", btn_s: "KAYIT OLUŞTUR",
-            wa: "WhatsApp Destek", btn_det: "İNCELE", btn_back: "KAPAT",
-            ph_name: "Ad Soyad", ph_tel: "Telefon No", ph_msg: "Arıza notu...",
-            items: [
-                { t: "Otomatik Kepenk", d: ["Çelik & Alüminyum", "Güçlü Motor", "Uzaktan Kumanda", "Sessiz Çalışma"] },
-                { t: "Şeffaf Kepenk", d: ["Kırılmaz Polikarbon", "Vitrin Görünümü", "Estetik Tasarım", "Yüksek Güvenlik"] },
-                { t: "Bahçe Kapısı", d: ["Yana Kayar Motor", "Fotoselli Emniyet", "Zaman Ayarlı", "Dayanıklı Ray"] },
-                { t: "Bariyer Sistemleri", d: ["Hızlı Geçiş", "Plaka Tanıma", "OGS/HGS Uyumlu", "Kollu Bariyer"] },
-                { t: "Endüstriyel Kapı", d: ["Fabrika Girişi", "Yüksek Yalıtım", "Personel Kapılı", "Rüzgar Dayanımı"] },
-                { t: "Cam Balkon", d: ["Katlanır Sistem", "Isı Camlı", "Renkli Cam", "Paslanmaz Aksesuar"] },
-                { t: "Korkuluk", d: ["Alüminyum", "Kare Profil", "Camlı Korkuluk", "Merdiven & Balkon"] },
-                { t: "Hızlı PVC Kapı", d: ["Branda Kapı", "Yoğun Trafik", "Sarmal Sistem", "Radar Sensörlü"] },
-                { t: "Yükleme Rampası", d: ["Hidrolik", "Menteşeli Dil", "Yüksek Tonaj", "İş Güvenliği"] },
-                { t: "Duşakabin", d: ["Temperli Cam", "Özel Ölçü", "Siyah/Krom Profil", "Modern Tasarım"] },
-                { t: "Pimapen", d: ["PVC Doğrama", "Isı Yalıtımı", "Çift Açılım", "Ses İzolasyonu"] },
-                { t: "Pergole & Giyotin", d: ["Motorlu Tavan", "Kumandalı Cam", "LED Aydınlatma", "Kafe & Restoran"] },
-                { t: "Dekorasyon", d: ["Anahtar Teslim", "Alçıpan & Boya", "Asma Tavan", "Tadilat"] },
-                { t: "Tesisat", d: ["Sıhhi Tesisat", "Elektrik", "Arıza Onarım", "Yenileme"] },
-                { t: "Doğalgaz", d: ["Proje Çizimi", "Kombi Montaj", "Petek Tesisatı", "Gaz Açımı"] }
-            ]
-        },
-        en: {
-            nav_home: "Home", nav_prod: "Products", nav_serv: "Service",
-            hero_t: "PROFESSIONAL<br><span style='color:var(--accent)'>SOLUTIONS</span>",
-            hero_d: "Automation, shutter and decoration services all over Mersin with Vision Gate assurance.",
-            form_t: "Quick Quote", btn_t: "GET QUOTE", sel_def: "Select Service...",
-            prod_t: "PRODUCTS & <span style='color:var(--accent)'>SERVICES</span>",
-            serv_t: "24/7 TECH SERVICE", serv_d: "Fill out the form for malfunctions, we will reach you.", btn_s: "CREATE RECORD",
-            wa: "WhatsApp Support", btn_det: "DETAILS", btn_back: "CLOSE",
-            ph_name: "Full Name", ph_tel: "Phone Number", ph_msg: "Issue details...",
-            items: [
-                { t: "Auto Shutters", d: ["Steel & Aluminum", "Strong Motor", "Remote Control", "Silent Operation"] },
-                { t: "Clear Shutters", d: ["Unbreakable Poly", "Showcase View", "Aesthetic Design", "High Security"] },
-                { t: "Garden Gates", d: ["Sliding Motor", "Photocell Safety", "Timer Set", "Durable Rail"] },
-                { t: "Barrier Systems", d: ["Fast Pass", "Plate Recog.", "OGS Compatible", "Arm Barrier"] },
-                { t: "Industrial Doors", d: ["Factory Entry", "High Insulation", "Personnel Door", "Wind Resistant"] },
-                { t: "Glass Balcony", d: ["Folding System", "Thermal Glass", "Tinted Glass", "Stainless Acc."] },
-                { t: "Railings", d: ["Aluminum", "Square Profile", "Glass Railing", "Stairs & Balcony"] },
-                { t: "High Speed PVC", d: ["Canvas Door", "Heavy Traffic", "Spiral System", "Radar Sensor"] },
-                { t: "Loading Ramp", d: ["Hydraulic", "Hinged Tongue", "High Tonnage", "Work Safety"] },
-                { t: "Shower Cabin", d: ["Tempered Glass", "Custom Size", "Black/Chrome", "Modern Design"] },
-                { t: "PVC Windows", d: ["PVC Joinery", "Heat Insulation", "Double Opening", "Sound Isolation"] },
-                { t: "Pergola", d: ["Motorized Roof", "Remote Glass", "LED Lighting", "Cafe & Restaurant"] },
-                { t: "Decoration", d: ["Turnkey Project", "Drywall & Paint", "Suspended Ceiling", "Renovation"] },
-                { t: "Plumbing", d: ["Sanitary", "Electrical", "Repair", "Renewal"] },
-                { t: "Natural Gas", d: ["Project Design", "Combi Install", "Radiator Install", "Gas Opening"] }
-            ]
-        },
-        ar: {
-            nav_home: "الرئيسية", nav_prod: "المنتجات", nav_serv: "الخدمات",
-            hero_t: "حلول <br><span style='color:var(--accent)'>احترافية</span>",
-            hero_d: "خدمات الأتمتة والستائر والديكور في جميع أنحاء مرسين بضمان فيجن جيت.",
-            form_t: "عرض سريع", btn_t: "اطلب عرض", sel_def: "اختر الخدمة...",
-            prod_t: "المنتجات و <span style='color:var(--accent)'>الخدمات</span>",
-            serv_t: "خدمة فنية 24/7", serv_d: "املأ النموذج في حالة حدوث عطل ، وسنتصل بك.", btn_s: "تسجيل طلب",
-            wa: "دعم واتساب", btn_det: "تفاصيل", btn_back: "إغلاق",
-            ph_name: "الاسم الكامل", ph_tel: "رقم الهاتف", ph_msg: "تفاصيل المشكلة...",
-            items: [
-                { t: "ستائر أوتوماتيكية", d: ["فولاذ وألمنيوم", "محرك قوي", "تحكم عن بعد", "تشغيل صامت"] },
-                { t: "ستائر شفافة", d: ["بولي كربونات", "واجهة عرض", "تصميم جمالي", "أمان عالي"] },
-                { t: "بوابات حدائق", d: ["محرك انزلاقي", "أمان ضوئي", "مؤقت", "سكة متينة"] },
-                { t: "أنظمة الحواجز", d: ["مرور سريع", "قراءة لوحات", "متوافق OGS", "حاجز ذراع"] },
-                { t: "أبواب صناعية", d: ["مدخل مصنع", "عزل عالي", "باب أفراد", "مقاوم للرياح"] },
-                { t: "شرفات زجاجية", d: ["نظام طي", "زجاج حراري", "زجاج ملون", "اكسسوارات ستانلس"] },
-                { t: "درابزين", d: ["ألمنيوم", "بروفيل مربع", "درابزين زجاجي", "سلالم وشرفات"] },
-                { t: "أبواب PVC سريعة", d: ["باب قماش", "حركة كثيفة", "نظام حلزوني", "حساس رادار"] },
-                { t: "منصات تحميل", d: ["هيدروليك", "لسان مفصلي", "حمولة عالية", "سلامة عمل"] },
-                { t: "كابينة استحمام", d: ["زجاج مقسى", "مقاس خاص", "أسود/كروم", "تصميم حديث"] },
-                { t: "نوافذ PVC", d: ["نجارة PVC", "عزل حراري", "فتح مزدوج", "عزل صوتي"] },
-                { t: "برجولة", d: ["سقف متحرك", "زجاج تحكم", "إضاءة LED", "مقهى ومطعم"] },
-                { t: "ديكور", d: ["تسليم مفتاح", "جبس وطلاء", "سقف معلق", "تجديد"] },
-                { t: "تأسيسات", d: ["سباكة", "كهرباء", "إصلاح", "تجديد"] },
-                { t: "غاز طبيعي", d: ["تصميم مشروع", "تركيب كومبي", "تدفئة", "فتح الغاز"] }
-            ]
-        },
-        ru: {
-            nav_home: "Главная", nav_prod: "Каталог", nav_serv: "Сервис",
-            hero_t: "ПРОФЕССИОНАЛЬНЫЕ<br><span style='color:var(--accent)'>РЕШЕНИЯ</span>",
-            hero_d: "Автоматика, рольставни и декор по всему Мерсину с гарантией Vision Gate.",
-            form_t: "Быстрый Заказ", btn_t: "ПОЛУЧИТЬ ЦЕНУ", sel_def: "Выберите услугу...",
-            prod_t: "ТОВАРЫ И <span style='color:var(--accent)'>УСЛУГИ</span>",
-            serv_t: "ТЕХПОДДЕРЖКА 24/7", serv_d: "Заполните форму при поломке, мы свяжемся с вами.", btn_s: "СОЗДАТЬ ЗАПИСЬ",
-            wa: "WhatsApp Чат", btn_det: "ДЕТАЛИ", btn_back: "ЗАКРЫТЬ",
-            ph_name: "Имя Фамилия", ph_tel: "Телефон", ph_msg: "Детали проблемы...",
-            items: [
-                { t: "Авто-Рольставни", d: ["Сталь и Алюминий", "Мощный мотор", "Пульт ДУ", "Тихая работа"] },
-                { t: "Прозрачные Ставни", d: ["Поликарбонат", "Витринный вид", "Эстетика", "Безопасность"] },
-                { t: "Садовые Ворота", d: ["Откатной мотор", "Фотоэлементы", "Таймер", "Прочный рельс"] },
-                { t: "Шлагбаумы", d: ["Быстрый проход", "Чтение номеров", "OGS совместим", "Стрела"] },
-                { t: "Пром. Ворота", d: ["Для фабрик", "Изоляция", "Дверь персонала", "Ветрозащита"] },
-                { t: "Остекление", d: ["Складная система", "Теплопакет", "Тонировка", "Нержавейка"] },
-                { t: "Перила", d: ["Алюминий", "Квадратный профиль", "Стекло", "Лестницы"] },
-                { t: "ПВХ Ворота", d: ["Тентовые", "Интенсив", "Спиральные", "Радар"] },
-                { t: "Пандусы", d: ["Гидравлика", "Откидной язык", "Тоннаж", "Безопасность"] },
-                { t: "Душевые", d: ["Закаленное стекло", "Спец. размер", "Черный/Хром", "Модерн"] },
-                { t: "ПВХ Окна", d: ["ПВХ профиль", "Теплоизоляция", "Двойное открытие", "Звукоизоляция"] },
-                { t: "Пергола", d: ["Мотор. крыша", "Стекло с пультом", "LED свет", "Кафе"] },
-                { t: "Декор", d: ["Под ключ", "Гипсокартон", "Потолки", "Ремонт"] },
-                { t: "Сантехника", d: ["Водопровод", "Электрика", "Ремонт", "Обновление"] },
-                { t: "Природный Газ", d: ["Проект", "Монтаж котла", "Радиаторы", "Запуск"] }
-            ]
-        }
-    };
-
-    function setLang(lang) {
-        document.body.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-        document.getElementById('currentLang').innerText = lang.toUpperCase();
-
-        // Sabit Yazıları Değiştir
-        document.querySelectorAll("[data-k]").forEach(el => {
-            const key = el.getAttribute("data-k");
-            if(dbLang[lang][key]) el.innerHTML = dbLang[lang][key];
-        });
-
-        // Form Placeholderları
-        document.getElementById("tAd").placeholder = dbLang[lang].ph_name;
-        document.getElementById("tTel").placeholder = dbLang[lang].ph_tel;
-        document.getElementById("aAd").placeholder = dbLang[lang].ph_name;
-        document.getElementById("aTel").placeholder = dbLang[lang].ph_tel;
-        document.getElementById("aNot").placeholder = dbLang[lang].ph_msg;
-
-        renderGrid(lang);
-    }
-
-    function renderGrid(lang) {
-        const grid = document.getElementById("pGrid");
-        grid.innerHTML = ""; // Temizle
-
-        dbLang[lang].items.forEach((item, i) => {
-            const img = (imgLinks[i] && imgLinks[i] !== "") ? imgLinks[i] : `https://picsum.photos/500/400?sig=${i+20}`;
-            
-            let liHtml = "";
-            item.d.forEach(feat => liHtml += `<li><i class="fas fa-check-circle"></i> ${feat}</li>`);
-
-            grid.innerHTML += `
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="${i * 50}">
-                <div class="product-card">
-                    <div class="card-img-box">
-                        <img src="${img}" alt="${item.t}">
-                    </div>
-                    <div class="card-content">
-                        <h5 class="fw-bold mb-3">${item.t}</h5>
-                        <button onclick="toggleOverlay(this)" class="btn btn-outline-light btn-sm rounded-pill w-50">${dbLang[lang].btn_det}</button>
-                    </div>
-                    
-                    <div class="card-overlay">
-                        <h4 class="text-warning mb-3 fw-bold">${item.t}</h4>
-                        <ul>${liHtml}</ul>
-                        <button onclick="toggleOverlay(this)" class="btn btn-premium mt-auto">${dbLang[lang].btn_back}</button>
+    <footer class="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                
+                <div class="col-span-1 md:col-span-2">
+                    <a href="#" class="text-2xl font-bold tracking-tighter mb-4 inline-block">
+                        <span class="text-white">VİSİON</span><span class="text-brand-orange">GATE</span>
+                    </a>
+                    <p class="text-gray-400 mt-4 max-w-sm text-sm leading-relaxed">
+                        <span class="lang-tr">Güvenlik ve estetiği bir araya getiren yeni nesil yapay zeka tasarımlı endüstriyel kapı ve kepenk çözümleri.</span>
+                        <span class="lang-en hidden">Next-generation AI-designed industrial door and shutter solutions combining security and aesthetics.</span>
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:bg-brand-orange hover:border-brand-orange hover:text-white transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:bg-brand-orange hover:border-brand-orange hover:text-white transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:bg-brand-orange hover:border-brand-orange hover:text-white transition-all">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
                     </div>
                 </div>
-            </div>`;
+
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white border-b border-gray-700 pb-2 inline-block">
+                        <span class="lang-tr">Hızlı Linkler</span><span class="lang-en hidden">Quick Links</span>
+                    </h4>
+                    <ul class="space-y-3 mt-2 text-sm">
+                        <li><a href="#home" class="text-gray-400 hover:text-brand-orange transition-colors">
+                            <span class="lang-tr">Ana Sayfa</span><span class="lang-en hidden">Home</span>
+                        </a></li>
+                        <li><a href="#urunler" class="text-gray-400 hover:text-brand-orange transition-colors">
+                            <span class="lang-tr">Tüm Ürünler</span><span class="lang-en hidden">All Products</span>
+                        </a></li>
+                        <li><a href="#hizmetler" class="text-gray-400 hover:text-brand-orange transition-colors">
+                            <span class="lang-tr">Servis ve Bakım</span><span class="lang-en hidden">Service & Maintenance</span>
+                        </a></li>
+                        <li><a href="#iletisim" class="text-gray-400 hover:text-brand-orange transition-colors">
+                            <span class="lang-tr">İletişim & Konum</span><span class="lang-en hidden">Contact & Location</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white border-b border-gray-700 pb-2 inline-block">
+                        <span class="lang-tr">Çalışma Saatleri</span><span class="lang-en hidden">Working Hours</span>
+                    </h4>
+                    <ul class="space-y-3 mt-2 text-sm text-gray-400">
+                        <li class="flex justify-between">
+                            <span class="lang-tr">Pzt - Cuma:</span><span class="lang-en hidden">Mon - Fri:</span> 
+                            <span>08:30 - 19:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="lang-tr">Cumartesi:</span><span class="lang-en hidden">Saturday:</span> 
+                            <span>09:00 - 15:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="lang-tr">Pazar:</span><span class="lang-en hidden">Sunday:</span> 
+                            <span class="lang-tr">Nöbetçi Servis</span><span class="lang-en hidden">On Call</span>
+                        </li>
+                        <li class="mt-4 pt-4 border-t border-gray-800 text-brand-orange font-bold flex items-center">
+                            <i class="fas fa-clock mr-2"></i> 7/24 Acil Servis
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs">
+                <p>&copy; 2026 VisionGate Otomatik Kapı ve Kepenk Sistemleri.</p>
+                <p class="mt-2 md:mt-0">Dark Theme Minimalist Design</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. Language Toggle Logic ---
+        let currentLang = 'tr';
+        function toggleLang() {
+            currentLang = currentLang === 'tr' ? 'en' : 'tr';
+            
+            // Toggle TR elements
+            document.querySelectorAll('.lang-tr').forEach(el => {
+                if(currentLang === 'en') el.classList.add('hidden');
+                else el.classList.remove('hidden');
+            });
+            
+            // Toggle EN elements
+            document.querySelectorAll('.lang-en').forEach(el => {
+                if(currentLang === 'tr') el.classList.add('hidden');
+                else el.classList.remove('hidden');
+            });
+
+            // Update button texts
+            const btnText = currentLang === 'tr' ? 'EN' : 'TR';
+            document.getElementById('lang-btn-text').innerText = btnText;
+            document.getElementById('lang-btn-text-mobile').innerText = btnText;
+        }
+
+        // --- 2. Mobile Menu Logic ---
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         });
-    }
 
-    function toggleOverlay(btn) {
-        const card = btn.closest('.product-card');
-        const overlay = card.querySelector('.card-overlay');
-        overlay.classList.toggle('active');
-    }
-
-    // Başlangıç Ayarları
-    window.onload = () => setLang('tr');
-
-    // Firebase (Aynı kaldı)
-    const firebaseConfig = {
-        apiKey: "AIzaSyDXTBYHb9kxgb37-H-NM2dn1ESvVy0xg88",
-        authDomain: "visiongateotokapi.firebaseapp.com",
-        projectId: "visiongateotokapi",
-        storageBucket: "visiongateotokapi.firebasestorage.app",
-        messagingSenderId: "913114045124",
-        appId: "1:913114045124:web:2ff87d9e0a9c3d062b8791"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    document.getElementById("teklifForm").onsubmit = async (e) => {
-        e.preventDefault();
-        await db.collection("teklifler").add({
-            ad: document.getElementById("tAd").value, tel: document.getElementById("tTel").value,
-            urun: document.getElementById("tUrun").value, tarih: new Date().toLocaleString()
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
         });
-        alert("Teklif isteğiniz alındı. En kısa sürede döneceğiz."); e.target.reset();
-    };
 
-    document.getElementById("arizaForm").onsubmit = async (e) => {
-        e.preventDefault();
-        await db.collection("arizalar").add({
-            ad: document.getElementById("aAd").value, tel: document.getElementById("aTel").value,
-            not: document.getElementById("aNot").value, tarih: new Date().toLocaleString()
-        });
-        const successMsg = document.getElementById("aSuccess");
-        successMsg.classList.remove("d-none");
-        e.target.reset();
-        setTimeout(() => successMsg.classList.add("d-none"), 4000);
-    };
-</script>
+        // --- 3. Product Generation (12 AI Generated Items) ---
+        // Using Pollinations.ai for dynamic on-the-fly AI images based on prompt text.
+        const products = [
+            {
+                img: "https://image.pollinations.ai/prompt/industrial%20heavy%20duty%20automatic%20steel%20roller%20shutter%20door%20dark%20grey%20with%20orange%20accent?width=600&height=400&nologo=true&seed=1",
+                tr_title: "Ağır Yük Çelik Kepenk", en_title: "Heavy Duty Steel Shutter",
+                tr_desc: "Endüstriyel tesisler için yüksek dayanımlı, zırhlı çelik otomatik sistemler.", en_desc: "High-strength, armored steel automatic systems for industrial facilities."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/modern%20storefront%20aluminum%20roller%20shutter%20door%20night%20lighting?width=600&height=400&nologo=true&seed=2",
+                tr_title: "Alüminyum Mağaza Kepengi", en_title: "Aluminum Storefront Shutter",
+                tr_desc: "Isı ve ses yalıtımı sağlayan, estetik ve paslanmaz alüminyum profil.", en_desc: "Aesthetic and rust-proof aluminum profile providing heat and sound insulation."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/premium%20dark%20grey%20sectional%20garage%20door%20modern%20house?width=600&height=400&nologo=true&seed=3",
+                tr_title: "Premium Seksiyonel Garaj", en_title: "Premium Sectional Garage",
+                tr_desc: "Müstakil evler için sessiz, poliüretan dolgulu yalıtımlı garaj kapıları.", en_desc: "Silent, polyurethane-filled insulated garage doors for detached houses."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/transparent%20polycarbonate%20roller%20shutter%20shopping%20mall%20store?width=600&height=400&nologo=true&seed=4",
+                tr_title: "Şeffaf Polikarbon Kepenk", en_title: "Transparent Polycarbonate Shutter",
+                tr_desc: "AVM mağazaları için güvenlik sağlarken vitrin görünürlüğünü kesmeyen sistem.", en_desc: "System providing security without blocking storefront visibility for mall shops."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/perforated%20micro%20hole%20steel%20security%20roller%20shutter?width=600&height=400&nologo=true&seed=5",
+                tr_title: "Mikro Delikli Kepenk", en_title: "Micro-Perforated Shutter",
+                tr_desc: "Hava akışı ve içerinin loş bir şekilde görünmesini sağlayan çelik tasarım.", en_desc: "Steel design allowing airflow and dim interior visibility."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/high%20speed%20pvc%20fold%20up%20door%20factory%20warehouse%20orange?width=600&height=400&nologo=true&seed=6",
+                tr_title: "Hızlı PVC Branda Kapı", en_title: "High-Speed PVC Door",
+                tr_desc: "Fabrika iç mekanlarında trafiği hızlandıran saniyeler içinde açılan kapılar.", en_desc: "Doors opening in seconds speeding up traffic in factory interiors."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/fire%20resistant%20heavy%20metal%20roller%20shutter%20warehouse?width=600&height=400&nologo=true&seed=7",
+                tr_title: "Yangın Dayanımlı Kepenk", en_title: "Fire Resistant Shutter",
+                tr_desc: "Olası yangın durumunda alevlerin ilerlemesini durduran sertifikalı sistemler.", en_desc: "Certified systems preventing the spread of flames in case of fire."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/modern%20residential%20window%20motorized%20roller%20blinds%20outside?width=600&height=400&nologo=true&seed=8",
+                tr_title: "Motorlu Pencere Panjuru", en_title: "Motorized Window Blinds",
+                tr_desc: "Villalar ve ofis pencereleri için akıllı telefon uyumlu güvenlik panjurları.", en_desc: "Smartphone compatible security blinds for villas and office windows."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/industrial%20motorized%20sliding%20gate%20entrance%20security?width=600&height=400&nologo=true&seed=9",
+                tr_title: "Otomatik Yana Kayar Kapı", en_title: "Automatic Sliding Gate",
+                tr_desc: "Site ve fabrika dış girişleri için yüksek motor kapasiteli yana kayar sistem.", en_desc: "High motor capacity sliding system for residential and factory outer entrances."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/radar%20sensor%20automatic%20glass%20sliding%20door%20hospital?width=600&height=400&nologo=true&seed=10",
+                tr_title: "Fotoselli Cam Kapı", en_title: "Photocell Glass Door",
+                tr_desc: "Hastaneler ve marketler için radar sensörlü, sessiz otomatik geçiş kapısı.", en_desc: "Radar-sensored, silent automatic passage door for hospitals and markets."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/spiral%20high%20speed%20aluminum%20roller%20door%20factory?width=600&height=400&nologo=true&seed=11",
+                tr_title: "Sarmal Hızlı Kapı", en_title: "Spiral High-Speed Door",
+                tr_desc: "İzolasyon ve hızı birleştiren, aşınmaya dayanıklı özel endüstriyel model.", en_desc: "Special industrial model combining insulation and speed, wear-resistant."
+            },
+            {
+                img: "https://image.pollinations.ai/prompt/smart%20home%20iot%20garage%20door%20system%20concept?width=600&height=400&nologo=true&seed=12",
+                tr_title: "IoT Akıllı Kepenk Sistemi", en_title: "IoT Smart Shutter System",
+                tr_desc: "Dünyanın her yerinden mobil uygulama ile kontrol edilebilen, rapor sunan sistem.", en_desc: "System controllable worldwide via mobile app, providing status reports."
+            }
+        ];
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init({ duration: 800, once: true });</script>
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = products.map((p, index) => `
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.15)] hover:border-brand-orange transition-all duration-500 group" style="animation: fadeIn 0.5s ease-out ${index * 0.1}s backwards;">
+                    <div class="h-56 overflow-hidden relative bg-gray-900">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-600 text-sm">
+                            <i class="fas fa-spinner fa-spin mr-2"></i> AI Yüklüyor...
+                        </div>
+                        <img src="${p.img}" alt="${p.tr_title}" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" loading="lazy">
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm text-brand-orange text-xs font-bold px-3 py-1 rounded-full border border-brand-orange/30 z-20">AI Model</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">
+                            <span class="lang-tr">${p.tr_title}</span>
+                            <span class="lang-en ${currentLang === 'en' ? '' : 'hidden'}">${p.en_title}</span>
+                        </h3>
+                        <p class="text-gray-400 mb-5 text-sm line-clamp-2">
+                            <span class="lang-tr">${p.tr_desc}</span>
+                            <span class="lang-en ${currentLang === 'en' ? '' : 'hidden'}">${p.en_desc}</span>
+                        </p>
+                        <a href="#iletisim" class="inline-flex items-center text-brand-orange font-semibold hover:text-white transition-colors">
+                            <span class="lang-tr">Ürün Detayı</span>
+                            <span class="lang-en ${currentLang === 'en' ? '' : 'hidden'}">View Details</span>
+                            <i class="fas fa-arrow-right ml-2 text-sm transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
 
+        // Initialize products on load
+        window.addEventListener('DOMContentLoaded', renderProducts);
+
+        // --- 4. Form Submit Logic ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const msgTR = "Talebiniz alınmıştır. VisionGate Mersin ekibimiz en kısa sürede size dönüş yapacaktır.";
+            const msgEN = "Your request has been received. Our VisionGate Mersin team will contact you shortly.";
+            
+            const box = document.createElement('div');
+            box.className = 'fixed top-24 left-1/2 transform -translate-x-1/2 bg-brand-orange text-white px-6 py-4 rounded-lg shadow-2xl z-50 font-bold flex items-center';
+            box.innerHTML = `<i class="fas fa-check-circle mr-3 text-2xl"></i> <span>${currentLang === 'tr' ? msgTR : msgEN}</span>`;
+            document.body.appendChild(box);
+            
+            setTimeout(() => {
+                box.style.opacity = '0';
+                box.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => box.remove(), 500);
+            }, 4000);
+            
+            e.target.reset();
+        }
+    </script>
 </body>
 </html>
