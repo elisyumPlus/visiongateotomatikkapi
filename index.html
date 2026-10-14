@@ -1,95 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bakım Y.apılıyor</title>
-    <!-- Tailwind CSS for modern styling and animations -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter and Press Start 2P for retro pixel vibes -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-        .pixel-font {
-            font-family: 'Press Start 2P', monospace;
-        }
-        /* Custom animations for pixel worker tools */
-        @keyframes hammer {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-45deg) translateY(-4px); }
-        }
-        .animate-hammer {
-            animation: hammer 0.8s infinite ease-in-out;
-            transform-origin: bottom right;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d0f">
+  <meta name="description" content="Vision Gate; otomatik kepenk, kapı, bariyer ve cam sistemlerinde Türkiye geneline keşif, imalat ve montaj çözümleri sunar.">
+  <meta name="keywords" content="otomatik kepenk, kapı, bariyer, panjur, cam sistemleri, Vision Gate">
+  <meta name="author" content="Vision Gate">
+  <meta name="robots" content="index, follow">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Vision Gate | Otomatik Kepenk, Bariyer & Cam Sistemleri">
+  <meta property="og:description" content="Vision Gate; otomatik kepenk, kapı, bariyer ve cam sistemlerinde Türkiye geneline keşif, imalat ve montaj çözümleri sunar.">
+  <meta property="og:image" content="assets/vision-gate-hero.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vision Gate | Otomatik Kepenk, Bariyer & Cam Sistemleri">
+  <meta name="twitter:description" content="Vision Gate; otomatik kepenk, kapı, bariyer ve cam sistemlerinde Türkiye geneline keşif, imalat ve montaj çözümleri sunar.">
+  <meta name="twitter:image" content="assets/vision-gate-hero.png">
+  <title>Vision Gate | Otomatik Kepenk, Bariyer & Cam Sistemleri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6 relative">
-
-    <main class="relative z-10 max-w-lg w-full bg-black/90 border border-zinc-900 rounded-3xl p-8 sm:p-10 shadow-2xl text-center flex flex-col items-center">
-
-        <div class="mb-8 relative flex items-center justify-center">
-            <!-- Glowing aura behind the builder -->
-            <div class="absolute w-32 h-32 bg-amber-500/10 rounded-full blur-xl animate-pulse"></div>
-
-            <!-- Pixel Art Container using SVG for crisp pixel rendering -->
-            <div class="w-40 h-40 bg-zinc-950 border border-zinc-900 rounded-2xl flex items-center justify-center relative shadow-inner overflow-hidden group">
-                
-                <!-- SVG Pixel Construction Worker with Hard Hat -->
-                <svg viewBox="0 0 64 64" class="w-28 h-28 drop-shadow-md">
-                    <!-- Worker Body / Clothes -->
-                    <rect x="22" y="44" width="20" height="16" fill="#3b82f6" rx="2"/>
-                    <rect x="28" y="44" width="8" height="16" fill="#1d4ed8"/>
-                    <rect x="26" y="38" width="12" height="8" fill="#fbcfe8"/>
-
-                    <!-- Hard Hat (Yellow Baret) -->
-                    <path d="M 16 26 L 48 26 C 50 26 52 24 50 22 C 45 16 35 14 32 14 C 29 14 19 16 14 22 C 12 24 14 26 16 26 Z" fill="#fbbf24"/>
-                    <rect x="28" y="12" width="8" height="3" fill="#f59e0b" rx="1"/>
-
-                    <!-- Head / Face -->
-                    <rect x="20" y="26" width="24" height="14" fill="#fde047" rx="2"/>
-                    <eyes>
-                        <rect x="25" y="30" width="3" height="3" fill="#1e293b"/>
-                        <rect x="36" y="30" width="3" height="3" fill="#1e293b"/>
-                    </eyes>
-                    <!-- Mustache / Smile -->
-                    <rect x="28" y="36" width="8" height="2" fill="#b45309"/>
-
-                    <!-- Animated Hammer Arm -->
-                    <g class="animate-hammer">
-                        <!-- Arm -->
-                        <rect x="40" y="36" width="12" height="4" fill="#fde047" rx="2"/>
-                        <!-- Hammer Handle -->
-                        <rect x="48" y="28" width="4" height="16" fill="#78350f" rx="1"/>
-                        <!-- Hammer Head -->
-                        <rect x="44" y="24" width="12" height="6" fill="#64748b" rx="1"/>
-                    </g>
-                </svg>
-
-                <!-- Floating Sparkle Effect -->
-                <div class="absolute bottom-4 right-6 w-2 h-2 bg-amber-400 rounded-full animate-ping"></div>
-            </div>
+<body id="ust" data-title-tr="Vision Gate | Otomatik Kepenk, Bariyer & Cam Sistemleri" data-title-en="Vision Gate | Automatic Shutters, Barriers & Glass Systems" data-description-tr="Vision Gate; otomatik kepenk, kapı, bariyer ve cam sistemlerinde Türkiye geneline keşif, imalat ve montaj çözümleri sunar." data-description-en="Vision Gate provides nationwide surveys, fabrication and installation for shutters, doors, barriers and glass systems.">
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-note"><span><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Türkiye genelinde keşif, imalat ve montaj</span></div>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html#ana-sayfa" class="brand" aria-label="Vision Gate ana sayfa"><span class="brand-mark" aria-hidden="true">VG</span><span><span class="brand-name">VISION <span>GATE</span></span><span class="brand-tag">Güvenlik · Konfor · Estetik</span></span></a>
+      <nav class="nav-links" id="site-nav" aria-label="Ana menü">
+        <a href="index.html">Ana Sayfa</a><a href="kurumsal.html">Kurumsal</a><a href="hizmetler.html">Hizmetler</a><a href="teklif.html">İletişim</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-contact" href="tel:+905393500356" aria-label="Vision Gate'i ara: 0539 350 03 56"><i class="fa-solid fa-phone" aria-hidden="true"></i><span>0539 350 03 56</span></a>
+        <a class="nav-contact whatsapp" href="https://wa.me/905393500356" target="_blank" rel="noopener noreferrer" aria-label="Vision Gate ile WhatsApp üzerinden iletişime geç"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+        <a class="btn btn-outline btn-small" href="hizmetler.html">Hizmetleri Gör <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+        <a class="btn btn-primary btn-small" href="teklif.html">Teklif Al <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <button class="menu-toggle" type="button" aria-label="Menüyü aç" aria-controls="site-nav" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </header>
+  <main>
+<section class="hero" id="ana-sayfa" aria-labelledby="hero-title">
+      <div class="hero-bg"><img src="assets/vision-gate-hero.png" data-image-key="hero" alt="Vision Gate markalı turuncu otomatik kepenk uygulaması" fetchpriority="high"></div>
+      <div class="container">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="850">
+          <div class="hero-kicker"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i> Mühendislik, güvenlik ve tasarım bir arada</div>
+          <h1 id="hero-title">Güvenlik ve<br><span class="line2">estetik kapınızda.</span></h1>
+          <p class="hero-copy"><strong>Sağlam montaj, temiz işçilik.</strong> Otomatik kepenk, kapı, bariyer ve cam sistemlerinde Türkiye geneline uzanan profesyonel çözümler.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="teklif.html">Projeniz için teklif alın <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            <a class="btn btn-outline" href="hizmetler.html"><i class="fa-regular fa-square-caret-down" aria-hidden="true"></i> Hizmetleri keşfedin</a>
+          </div>
+          <div class="hero-trust" aria-label="Hizmet özellikleri">
+            <span class="trust-item"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> 81 ilde hizmet ağı</span>
+            <span class="trust-divider" aria-hidden="true"></span>
+            <span class="trust-item"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Uzman montaj</span>
+            <span class="trust-divider" aria-hidden="true"></span>
+            <span class="trust-item"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Güvenilir çözümler</span>
+          </div>
         </div>
-
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-            Sistem Güncellemesi
+      </div>
+      <div class="hero-index" aria-hidden="true">01 / VISION GATE</div>
+    </section>
+<div class="marquee" aria-label="Vision Gate hizmet alanları">
+      <div class="container marquee-track">
+        <span class="marquee-item"><i class="fa-solid fa-circle" aria-hidden="true"></i> Kepenk</span>
+        <span class="marquee-item"><i class="fa-solid fa-circle" aria-hidden="true"></i> Endüstriyel kapı</span>
+        <span class="marquee-item"><i class="fa-solid fa-circle" aria-hidden="true"></i> Bariyer</span>
+        <span class="marquee-item"><i class="fa-solid fa-circle" aria-hidden="true"></i> Panjur</span>
+        <span class="marquee-item"><i class="fa-solid fa-circle" aria-hidden="true"></i> Cam balkon</span>
+        <span class="marquee-item"><i class="fa-solid fa-circle" aria-hidden="true"></i> Giyotin cam</span>
+      </div>
+    </div>
+    <section class="section home-showcase" aria-labelledby="home-solutions-title">
+      <div class="container">
+        <div class="section-row">
+          <div class="section-heading">
+            <span class="eyebrow">Öne çıkan çözümler</span>
+            <h2 id="home-solutions-title">İhtiyacınıza uygun <span class="accent">sistemler.</span></h2>
+            <p>Kepenkten cam sistemlerine, öne çıkan hizmetlerimize göz atın.</p>
+          </div>
+          <a class="text-link home-all-link" href="hizmetler.html">Tüm hizmetleri gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
+        <div class="home-showcase-grid">
+          <a class="home-feature-card" href="hizmetler.html">
+            <img src="assets/images/kepenk.png" data-image-key="kepenk" alt="Siyah ve turuncu otomatik kepenk sistemi" loading="lazy">
+            <span class="home-feature-shade"></span>
+            <span class="home-feature-content"><span class="home-feature-label">Güvenli giriş</span><strong>Otomatik kepenk</strong><span class="home-feature-more">Hizmeti incele <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span>
+          </a>
+          <a class="home-feature-card" href="hizmetler.html">
+            <img src="assets/images/kapi.png" data-image-key="kapi" alt="Turuncu endüstriyel garaj kapıları" loading="lazy">
+            <span class="home-feature-shade"></span>
+            <span class="home-feature-content"><span class="home-feature-label">Yoğun kullanıma uygun</span><strong>Garaj ve endüstriyel kapı</strong><span class="home-feature-more">Hizmeti incele <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span>
+          </a>
+          <a class="home-feature-card" href="hizmetler.html">
+            <img src="assets/images/cam-balkon.png" data-image-key="camBalkon" alt="Turuncu cam balkon ve ısıcamlı sistem" loading="lazy">
+            <span class="home-feature-shade"></span>
+            <span class="home-feature-content"><span class="home-feature-label">Konforlu yaşam alanı</span><strong>Cam balkon sistemleri</strong><span class="home-feature-more">Hizmeti incele <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="home-shortcuts" aria-labelledby="home-shortcuts-title">
+      <div class="container home-shortcuts-inner">
+        <div class="home-shortcuts-heading">
+          <span class="eyebrow">Vision Gate</span>
+          <h2 id="home-shortcuts-title">Aradığınız bilgiye <span class="accent">hızlıca ulaşın.</span></h2>
+        </div>
+        <div class="home-shortcut-grid">
+          <a class="home-shortcut" href="urun-bulucu.html"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span><strong>Ürün bulucu</strong><small>İhtiyacınıza uygun sistemi keşfedin.</small></span><i class="fa-solid fa-arrow-right home-shortcut-arrow" aria-hidden="true"></i></a>
+          <a class="home-shortcut" href="destek.html"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><span><strong>Bakım ve servis</strong><small>Bakım ya da arıza talebinizi iletin.</small></span><i class="fa-solid fa-arrow-right home-shortcut-arrow" aria-hidden="true"></i></a>
+          <a class="home-shortcut" href="projeler.html"><i class="fa-regular fa-images" aria-hidden="true"></i><span><strong>Uygulama alanları</strong><small>Çözümlerimizin kullanıldığı alanlara bakın.</small></span><i class="fa-solid fa-arrow-right home-shortcut-arrow" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+    <section class="section home-projects" aria-labelledby="home-projects-title">
+      <div class="container">
+        <div class="section-row">
+          <div class="section-heading">
+            <span class="eyebrow">Uygulama alanları</span>
+            <h2 id="home-projects-title">Farklı yapılara <span class="accent">uyum sağlayan çözümler.</span></h2>
+            <p>Konut, ticari ve cam sistemlerinden seçili uygulama alanlarını keşfedin.</p>
+          </div>
+          <a class="text-link home-all-link" href="projeler.html">Tüm uygulama alanlarını gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <div class="home-project-grid">
+          <a class="home-project-card" href="projeler.html">
+            <img src="assets/images/galeri-konut.png" data-image-key="galeriKonut" alt="Modern konut mimarisinde cam ve giriş sistemleri" loading="lazy">
+            <span class="home-project-copy"><span class="home-project-category">Konut çözümleri</span><strong>Mimariyle uyumlu sistemler</strong><span class="home-project-more">Uygulamayı incele <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span>
+          </a>
+          <a class="home-project-card" href="projeler.html">
+            <img src="assets/images/bariyer.png" data-image-key="bariyer" alt="Turuncu otomatik bariyer sistemleri" loading="lazy">
+            <span class="home-project-copy"><span class="home-project-category">Tesis girişleri</span><strong>Kontrollü araç geçişi</strong><span class="home-project-more">Uygulamayı incele <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span>
+          </a>
+          <a class="home-project-card" href="projeler.html">
+            <img src="assets/images/galeri-cephe.png" data-image-key="galeriCephe" alt="Modern yapıda cam cephe ve dış mekân" loading="lazy">
+            <span class="home-project-copy"><span class="home-project-category">Cam cepheler</span><strong>Modern dış mekân</strong><span class="home-project-more">Uygulamayı incele <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a href="index.html" class="brand" aria-label="Vision Gate ana sayfa"><span class="brand-mark" aria-hidden="true">VG</span><span><span class="brand-name">VISION <span>GATE</span></span><span class="brand-tag">Güvenlik · Konfor · Estetik</span></span></a><p>Sağlam montaj, temiz işçilik. Güvenlik, konfor ve estetik için kapıdan cama uzanan sistem çözümleri.</p></div>
+        <div class="footer-col"><h3>Hızlı bağlantılar</h3><div class="footer-links"><a href="urun-bulucu.html">Ürün Bulucu</a><a href="neden-biz.html">Neden Biz?</a><a href="projeler.html">Projeler</a><a href="destek.html">Servis</a><a href="sss.html">SSS</a><a href="surec.html">Çalışma süreci</a><a href="referanslar.html">Çalıştığımız yapılar</a></div></div>
+        <div class="footer-col"><h3>Hizmetler</h3><div class="footer-links"><a href="hizmetler.html">Otomatik kepenk</a><a href="hizmetler.html">Garaj ve endüstriyel kapı</a><a href="hizmetler.html">Bariyer sistemleri</a><a href="hizmetler.html">Panjur ve cam sistemleri</a><a href="teklif.html">Teklif formu</a></div></div>
+        <div class="footer-col"><h3>Bize ulaşın</h3><div class="footer-links"><a class="social-link" href="tel:+905393500356"><i class="fa-solid fa-phone" aria-hidden="true"></i>0539 350 03 56</a><a class="social-link" href="https://wa.me/905393500356" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="social-link" href="https://www.instagram.com/visiongate_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i>@visiongate_</a></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 <strong>Vision Gate</strong>. Tüm hakları saklıdır.</span><div class="footer-bottom-actions"><button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to English" title="English">EN</button><a class="back-top-link" href="#ust">Yukarı dön <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a></div></div>
+    </div>
+  </footer>
+  <a class="back-top" href="#ust" aria-label="Sayfanın başına dön"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
 
-        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-3">
-            Bakım Yapılıyor
-        </h1>
-
-        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-md">
-            Lütfen daha sonra uğrayınız.
-        </p>
-
-    </main>
-
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/site-data.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
