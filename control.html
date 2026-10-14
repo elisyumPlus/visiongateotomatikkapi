@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionGate Otomatik Kapı Bilgi Paneli</title>
+    <!-- Tailwind CSS for modern utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        pitch: '#000000',
+                        deep: '#0a0a0a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.05); }
+            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); }
+        }
+        .glowing-card {
+            animation: pulse-glow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-pitch text-white min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white">
+
+    <header class="w-full border-b border-neutral-900 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center space-x-2">
+            <div class="w-3 h-3 rounded-full bg-white animate-pulse"></div>
+            <span class="font-medium tracking-wider text-sm text-neutral-400">VISIONGATE.SYSTEM</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span id="live-clock" class="text-xs font-mono text-neutral-500 border border-neutral-800 px-3 py-1 rounded-full"></span>
+            <span class="text-xs uppercase tracking-widest text-neutral-500 border border-neutral-800 px-3 py-1 rounded-full">Canlı Ağ Paneli</span>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-12 text-center">
+        <div class="max-w-4xl mx-auto space-y-10 w-full">
+            <div class="space-y-4">
+                <h1 class="text-3xl sm:text-5xl font-light tracking-tight text-white">
+                    visiongateotomatikkapi.com
+                </h1>
+                <p class="text-neutral-400 text-sm sm:text-base font-light leading-relaxed max-w-xl mx-auto">
+                    Otomatik kapı teknolojileri, fotoselli geçiş sistemleri ve endüstriyel çözümler sunan kurumsal altyapının gerçek zamanlı veri akışı ve yönetim paneli.
+                </p>
+                <!-- Yönetici Destek Butonu -->
+                <div class="pt-2">
+                    <a href="https://wa.me/905510908382?text=Merhaba,%20VisionGate%20paneli%20üzerinden%20bağlanıyorum,%20destek%20almak%20istiyorum." target="_blank" class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-white text-black font-medium text-sm hover:bg-neutral-200 transition-all duration-200 shadow-lg shadow-white/10">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.183 0-5.767 2.584-5.767 5.767 0 1.01.264 1.967.726 2.793l-.772 2.82 2.894-.758c.792.433 1.708.683 2.689.683 3.183 0 5.768-2.585 5.768-5.768s-2.585-5.767-5.738-5.767zm3.435 8.163c-.146.411-.843.763-1.171.811-.314.047-.724.088-2.316-.574-1.025-.429-1.684-1.464-1.735-1.533-.051-.069-.417-.554-.417-1.057 0-.503.264-.75.358-.852.094-.102.205-.127.274-.127.068 0 .136.002.195.006.196.012.292-.023.427-.348.146-.356.501-1.226.545-1.314.044-.087.073-.19.004-.306-.068-.116-.102-.19-.204-.306-.102-.116-.214-.262-.307-.353-.093-.092-.19-.076-.261-.061-.068.016-.408.156-.78.337-.373.181-.645.27-.743.348-.097.077-.615.727-.615 1.77 0 1.044.757 2.052.862 2.194.105.141 1.488 2.272 3.606 3.187.503.217.895.347 1.202.444.505.161.965.138 1.328.084.407-.061 1.251-.512 1.427-1.006.175-.494.175-.918.123-1.006-.052-.087-.191-.14-.337-.213z"/></svg>
+                        <span>Yönetici Destek (WhatsApp)</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Domain ve SSL Kartları (Fixed Grid Structure) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+                <!-- Domain Expiration Card -->
+                <div class="p-5 rounded-2xl bg-neutral-950 border border-neutral-900 glowing-card space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-neutral-500">Domain Durumu & Süre</span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    </div>
+                    <div class="text-2xl font-mono font-medium text-white" id="domain-countdown">71 Gün Kaldı</div>
+                    <p class="text-xs text-neutral-500">Kayıt: 25.12.2025 | Bitiş: 25.12.2026 (0 Yaş)</p>
+                </div>
+
+                <!-- SSL Security Card -->
+                <div class="p-5 rounded-2xl bg-neutral-950 border border-neutral-900 glowing-card space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-neutral-500">SSL / Sertifika Bilgisi</span>
+                        <span class="text-xs font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-900">Geçerli</span>
+                    </div>
+                    <div class="text-2xl font-mono font-medium text-white">42 Gün Kaldı</div>
+                    <p class="text-xs text-neutral-500">Sahibi: visiongateotomatikkapi • Uyumlu</p>
+                </div>
+            </div>
+
+            <!-- SEO ve Risk Analitiği Paneli -->
+            <div class="p-6 sm:p-8 rounded-2xl bg-neutral-950 border border-neutral-900 glowing-card space-y-6 text-left">
+                <div class="flex items-center justify-between border-b border-neutral-900 pb-4">
+                    <div>
+                        <h3 class="text-sm font-mono uppercase tracking-wider text-white">SEO ve Risk Değerlendirme Analitiği</h3>
+                        <p class="text-xs text-neutral-500 mt-1">İncelenen Sinyaller: <span class="text-neutral-300 font-mono">6 Sinyal / 6 Kural / 0 Engel / 0 Çakışma</span></p>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-900">Risk Puanı: 0/100 (Temiz)</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">Acil Aksiyon:</span>
+                        <span class="text-white">Yok</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">HTTP Status:</span>
+                        <span class="text-emerald-400">200</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">URL Yönlendirme:</span>
+                        <span class="text-white">Yönlenmedi</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">Canonical:</span>
+                        <span class="text-neutral-400">Yok</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">Meta Robots:</span>
+                        <span class="text-neutral-400">Yok</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">X-Robots-Tag:</span>
+                        <span class="text-neutral-400">Yok</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">Sitemap Sinyali:</span>
+                        <span class="text-neutral-400">Yok</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                        <span class="text-neutral-500">Index Engeli:</span>
+                        <span class="text-emerald-400">Görünmedi</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teknik Veriler ve DNS Performans Paneli -->
+            <div class="p-6 sm:p-8 rounded-2xl bg-neutral-950 border border-neutral-900 glowing-card space-y-6 text-left">
+                <div class="flex items-center justify-between border-b border-neutral-900 pb-4">
+                    <div>
+                        <h3 class="text-sm font-mono uppercase tracking-wider text-white">Teknik Altyapı ve DNS Analitiği</h3>
+                        <p class="text-xs text-neutral-500 mt-1">Sorgulanan Host: <span class="text-neutral-300 font-mono">visiongateotomatikkapi.com</span></p>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-900">Sistem Sağlıklı</span>
+                </div>
+
+                <!-- DNS Kayıtları ve IP -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="p-3 rounded-xl bg-neutral-900/50 border border-neutral-900">
+                        <span class="text-xs font-mono text-neutral-500 block">A Kaydı</span>
+                        <span class="text-sm font-mono font-medium text-white">4 Adet</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-neutral-900/50 border border-neutral-900">
+                        <span class="text-xs font-mono text-neutral-500 block">AAAA Kaydı</span>
+                        <span class="text-sm font-mono font-medium text-white">4 Adet</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-neutral-900/50 border border-neutral-900">
+                        <span class="text-xs font-mono text-neutral-500 block">NS / MX Kaydı</span>
+                        <span class="text-sm font-mono font-medium text-white">NS: 2 | MX: Yok</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-neutral-900/50 border border-neutral-900">
+                        <span class="text-xs font-mono text-neutral-500 block">Çözümlenen IP</span>
+                        <span class="text-xs font-mono font-medium text-white truncate block" title="185.199.108.153, 185.199.109.153">185.199.108.153...</span>
+                    </div>
+                </div>
+
+                <!-- Performans ve Ölçüm Metrikleri -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">Yanıt Süreleri ve Optimizasyon</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">DNS Süresi:</span>
+                            <span class="text-white">0.044 sn</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">Bağlantı:</span>
+                            <span class="text-white">0.025 sn</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">Yönlendirme:</span>
+                            <span class="text-white">0 sn</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">İlk Yanıt:</span>
+                            <span class="text-white">0.043 sn</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">İlk Bayt:</span>
+                            <span class="text-white">0.029 sn</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">Toplam Aktarım:</span>
+                            <span class="text-white">0.142 sn</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">Sıkıştırma:</span>
+                            <span class="text-emerald-400">Aktif</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">Charset:</span>
+                            <span class="text-white">UTF-8</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-neutral-900 border border-neutral-800 flex justify-between items-center">
+                            <span class="text-neutral-500">Cache:</span>
+                            <span class="text-emerald-400">Aktif</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8 rounded-2xl bg-neutral-950 border border-neutral-900 glowing-card space-y-4 text-left max-w-xl mx-auto w-full">
+                <h3 class="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-2">Alt Sayfa Durumları ve Bağlantılar</h3>
+                
+                <!-- Ana Domain Link (Active) -->
+                <a href="#main" onclick="showMsg('Ana alan adı (visiongateotomatikkapi.com) ana yayın nodu üzerinden aktif olarak hizmet vermektedir.')" class="flex items-center justify-between p-3 rounded-xl bg-neutral-900/50 border border-neutral-800/60 hover:border-neutral-700 transition-all cursor-pointer">
+                    <span class="text-sm font-mono text-neutral-300 underline underline-offset-4">visiongateotomatikkapi.com</span>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-900">
+                        aktif
+                    </span>
+                </a>
+
+                <!-- Admin Panel Link (Closed) -->
+                <a href="#admin" onclick="showMsg('Yönetici paneli (visiongateotomatikkapi.com/admin.html) güvenlik nedeniyle dış erişime kapalıdır.')" class="flex items-center justify-between p-3 rounded-xl bg-neutral-900/50 border border-neutral-800/60 hover:border-neutral-700 transition-all cursor-pointer">
+                    <span class="text-sm font-mono text-neutral-300 underline underline-offset-4">visiongateotomatikkapi.com/admin.html</span>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-950/80 text-red-400 border border-red-900">
+                        kapalı
+                    </span>
+                </a>
+
+                <!-- SEO Panel Link (Active) -->
+                <a href="#seo" onclick="showMsg('SEO analitiği alt sayfası (visiongateotomatikkapi.com/seo.html) aktif olarak veri topluyor.')" class="flex items-center justify-between p-3 rounded-xl bg-neutral-900/50 border border-neutral-800/60 hover:border-neutral-700 transition-all cursor-pointer">
+                    <span class="text-sm font-mono text-neutral-300 underline underline-offset-4">visiongateotomatikkapi.com/seo.html</span>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-900">
+                        aktif
+                    </span>
+                </a>
+            </div>
+
+            <!-- Talep ve Bildirim Bölümü -->
+            <div class="max-w-xl mx-auto w-full pt-4">
+                <div class="p-6 rounded-2xl bg-neutral-950 border border-neutral-900 space-y-4 text-left">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-mono uppercase tracking-wider text-neutral-400">Sistem Talep ve Geri Bildirim</h3>
+                        <span class="text-xs font-mono text-neutral-500">2.0 Modül</span>
+                    </div>
+                    <p class="text-xs text-neutral-500">Sistem üzerinde hata bildirimi, yeni özellik ekleme, tema veya görsel değişiklik taleplerinizi doğrudan iletebilirsiniz.</p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                        <button onclick="openRequestModal('Hata Bildirimi')" class="px-3 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-medium text-neutral-300 transition-all text-center">
+                            🐞 Hata Talebi
+                        </button>
+                        <button onclick="openRequestModal('Özellik Ekleme')" class="px-3 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-medium text-neutral-300 transition-all text-center">
+                            ⚡ Özellik Ekle
+                        </button>
+                        <button onclick="openRequestModal('Tema / Görsel Değişiklik')" class="px-3 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-medium text-neutral-300 transition-all text-center">
+                            🎨 Tema / Görsel
+                        </button>
+                        <button onclick="openRequestModal('Genel Değişiklik')" class="px-3 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-medium text-neutral-300 transition-all text-center">
+                            📝 Diğer Talep
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Notification Box (replacing alert) -->
+    <div id="custom-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 px-4">
+        <div class="bg-neutral-950 border border-neutral-800 p-6 rounded-2xl max-w-sm w-full space-y-4 text-center">
+            <h4 class="text-sm font-mono uppercase tracking-wider text-neutral-400">Sistem Bilgisi</h4>
+            <p id="modal-text" class="text-sm text-neutral-200"></p>
+            <button onclick="closeMsg()" class="w-full py-2 bg-white text-black rounded-xl font-medium text-xs hover:bg-neutral-200 transition-colors">Tamam</button>
+        </div>
+    </div>
+
+    <!-- Talep Oluşturma Modalı -->
+    <div id="request-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 px-4">
+        <div class="bg-neutral-950 border border-neutral-800 p-6 rounded-2xl max-w-md w-full space-y-4 text-left">
+            <div class="flex items-center justify-between border-b border-neutral-900 pb-3">
+                <h4 id="request-modal-title" class="text-sm font-mono uppercase tracking-wider text-white">Talep Oluştur</h4>
+                <button onclick="closeRequestModal()" class="text-neutral-500 hover:text-white text-sm font-mono">✕</button>
+            </div>
+            
+            <form id="request-form" onsubmit="submitRequest(event)" class="space-y-3">
+                <input type="hidden" id="request-type-input">
+                <div>
+                    <label class="block text-xs font-mono text-neutral-400 mb-1">Ad Soyad / Kurum</label>
+                    <input type="text" id="req-name" required class="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neutral-700" placeholder="Adınız">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-neutral-400 mb-1">WhatsApp / İletişim Numarası</label>
+                    <input type="text" id="req-contact" required class="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neutral-700" placeholder="0551...">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-neutral-400 mb-1">Talep Detayı ve Açıklama</label>
+                    <textarea id="req-desc" required rows="3" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neutral-700 resize-none" placeholder="Değişiklik veya hata detayını yazın..."></textarea>
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-white text-black rounded-xl font-medium text-xs hover:bg-neutral-200 transition-colors shadow-lg shadow-white/5">WhatsApp ile İlet</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="w-full py-6 text-center border-t border-neutral-900 text-xs text-neutral-600">
+        <p>&copy; 2026 • VisionGate Otomatik Kapı Sistemleri — Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <script>
+        // Live clock script
+        function updateStats() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString('tr-TR');
+        }
+        setInterval(updateStats, 1000);
+        updateStats();
+
+        // Custom modal functions (no alert)
+        function showMsg(text) {
+            event.preventDefault();
+            document.getElementById('modal-text').innerText = text;
+            document.getElementById('custom-modal').classList.remove('hidden');
+            document.getElementById('custom-modal').classList.add('flex');
+        }
+
+        function closeMsg() {
+            document.getElementById('custom-modal').classList.remove('flex');
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // Request modal functions
+        function openRequestModal(type) {
+            document.getElementById('request-type-input').value = type;
+            document.getElementById('request-modal-title').innerText = type + " Talebi Oluştur";
+            document.getElementById('request-modal').classList.remove('hidden');
+            document.getElementById('request-modal').classList.add('flex');
+        }
+
+        function closeRequestModal() {
+            document.getElementById('request-modal').classList.remove('flex');
+            document.getElementById('request-modal').classList.add('hidden');
+        }
+
+        function submitRequest(e) {
+            e.preventDefault();
+            const type = document.getElementById('request-type-input').value;
+            const name = document.getElementById('req-name').value;
+            const contact = document.getElementById('req-contact').value;
+            const desc = document.getElementById('req-desc').value;
+
+            const msg = `Merhaba, VisionGate paneli üzerinden talep oluşturuyorum.%0A%0A*Talep Türü:* ${type}%0A*Ad/Kurum:* ${name}%0A*İletişim:* ${contact}%0A*Detay:* ${desc}`;
+            window.open(`https://wa.me/905510908382?text=${msg}`, '_blank');
+            closeRequestModal();
+        }
+    </script>
+</body>
+</html>
